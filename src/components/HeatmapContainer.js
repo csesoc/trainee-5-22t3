@@ -3,16 +3,16 @@ import HeatmapCell from './HeatmapCell'
 
 let cells = [{}]
 
-const HeatmapContainer = () => {
-  const generateCells = (numCells) => {
+const HeatmapContainer = ({data}) => {
+  const generateCells = (numCells, values) => {
     return Array(numCells).fill(1)
-      .map((ie, i) => cells.push({key: i, cell: <HeatmapCell value={Math.floor(Math.random()*1000)}/>}));
+      .map((ie, i) => cells.push({key: i, cell: <HeatmapCell key={Math.random()*1000000} value={values[i]}/>}));
   }
 
-  generateCells(365);  
+  generateCells(data.length, data.map(x => x.value));  
 
   return (
-    <div className="grid grid-cols-26 gap-8 p-4 max-w-full" 
+    <div className="grid grid-cols-30 gap-8 p-4 max-w-full" 
          style={{
             backgroundColor: `rgba(10, 10, 20)`
           }}>

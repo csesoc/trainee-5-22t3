@@ -18,12 +18,13 @@ const getcolor = (value) => {
     case 200: color = 'bg-theme-pinkblue-200'; break;
     case 100: color = 'bg-theme-pinkblue-100'; break;
     case 0: color = 'bg-theme-pinkblue-0'; break;
+    default: color = 'bg-gray-500'
   }
   return color;
 }
 
-const HeatmapCell = (x) => {
-  let color = getcolor(x.value);
+const HeatmapCell = ({value, isHighlighted}) => {
+  let color = getcolor(value);
   
   return (
     <div className='container relative w-[100%]'>
@@ -31,7 +32,6 @@ const HeatmapCell = (x) => {
       <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
         transition duration-200`} 
-        onClick={() => setShowModal(true)}
       />
     </div>
   )
