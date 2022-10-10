@@ -30,7 +30,8 @@ const HeatmapCell = (x) => {
       <div className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
       <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
-        transition duration-200`}
+        transition duration-200`} 
+        onClick={() => setShowModal(true)}
       />
     </div>
   )
