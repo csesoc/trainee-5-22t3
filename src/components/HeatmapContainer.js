@@ -27,41 +27,4 @@ const HeatmapContainer = ({data, highlightProperty}) => {
   );
 }
   
-  /*
-  renderHighlightPropertyWin(property) {
-    const { cells } = this.state;
-    cells.map((x, i) => {
-      if (!x.info.wins.includes(property)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isDimmed={true}/>
-      else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={true}/>
-    });
-    return this.render();
-  }
-
-  renderHighlightPropertyLoss(property) {
-    const { cells } = this.state;
-    cells.map((x, i) => {
-      if (!x.info.losses.includes(property)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isDimmed={true}/>
-      else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={true}/>
-    });
-    return this.render();
-  }
-
-  renderDefault() {
-    return this.render();
-  }
-
-  render() {
-    const { cells } = this.state;
-    return (
-      <div className="grid grid-cols-24 gap-8 p-4 max-w-full" 
-           style={{
-              backgroundColor: `rgba(10, 10, 20)`
-            }}>
-        {cells.map(x => x.cell)}
-      </div>
-    )
-  }
-}
-*/
-
 export default HeatmapContainer;
