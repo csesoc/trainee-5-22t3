@@ -16,9 +16,9 @@ const data = Array(200).fill(1)
     return {
       date: date,
       index: i,
-      note: 'placeholder',
-      wins: Array(10).fill(1).map(x => Math.round(Math.random()*10)),
-      losses: Array(10).fill(1).map(x => Math.round(Math.random()*10)),
+      note: 'Fix youre depression with 3 easy steps',
+      wins: Array(10).fill(1).map(x => Math.round(Math.random()*20)),
+      losses: Array(10).fill(1).map(x => Math.round(Math.random()*20)),
       value: Math.round(Math.random()*1000)
     };
   });
@@ -26,7 +26,7 @@ const data = Array(200).fill(1)
 function App() {  
   return (
     <div className="App">
-      <HeatmapContainer data={data} highlightProperty={null}/>
+      <HeatmapContainer data={data} highlightProperty={2}/>
     </div>
   );
 }
