@@ -37,7 +37,7 @@ const HeatmapCell = ({value, isDimmed, isHighlighted}) => {
     <div className='container flex relative w-[100%] justify-center 
     items-center'>
       <div className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
-      <div className={`rounded-xl pb-[40%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
+      <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 blur opacity-50 ${color}
         hover:opacity-90 transition duration-500 `} 
       />
     </div>
