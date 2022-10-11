@@ -38,10 +38,10 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
   let color = getcolor(value);  
 
   const getTooltip = () => {
-    <span class={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[800%] lg:w-[1500%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}>
+    return (<span class={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[800%] lg:w-[1500%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}>
       {info.date.yyyymmdd()}<br/> 
       Note: {info.note}
-    </span>
+    </span>)
   }
 
   if (isDimmed) return (
@@ -55,7 +55,7 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
     <div className='group container flex relative w-[100%] justify-center 
     items-center'>
       <div ref={ref} className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
-      <div className={`rounded-xl pb-[40%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
+      <div className={`rounded-xl pb-[100%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
         hover:opacity-90 transition duration-500 `} 
       />
       {getTooltip()}
@@ -63,7 +63,8 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
   );
 
   return (
-    <div className='group container flex relative w-[100%]'>
+    <div className='group container flex relative w-[100%] justify-center 
+    items-center'>
       <div ref={ref} className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
       <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
