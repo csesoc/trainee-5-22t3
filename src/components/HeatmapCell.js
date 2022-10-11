@@ -54,8 +54,8 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
   if (isHighlighted) return (
     <div className='group container flex relative w-[100%] justify-center 
     items-center'>
-      <div ref={ref} className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
-      <div className={`rounded-xl pb-[100%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
+      <div ref={ref} className={`xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[100%] w-[100%] m-auto relative ${color}`}/>
+      <div className={`xl:rounded-xl lg:rounded-lg md:rounded-md pb-[100%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
         hover:opacity-90 transition duration-500 `} 
       />
       {getTooltip()}
@@ -66,7 +66,7 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
     <div className='group container flex relative w-[100%] justify-center 
     items-center'>
       <div ref={ref} className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
-      <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
+      <div className={`xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
         transition duration-200`} 
       />

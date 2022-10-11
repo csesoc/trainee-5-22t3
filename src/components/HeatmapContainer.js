@@ -20,7 +20,7 @@ const HeatmapContainer = ({data, highlightProperty}) => {
   }
 
   return(
-    <div className="grid grid-cols-24 xl:grid-cols-24 md:grid-cols-16 sm:grid-cols-12 lg:grid-cols-22 2xl:grid-cols-30 gap-8 p-4 max-w-full" style={{
+    <div className="grid grid-cols-24 xl:grid-cols-22 md:grid-cols-16 sm:grid-cols-12 lg:grid-cols-20 2xl:grid-cols-30 gap-8 p-4 max-w-full" style={{
             backgroundColor: `rgba(10, 10, 20)`
         }}>
       {cells.map(x => x.cell)}
