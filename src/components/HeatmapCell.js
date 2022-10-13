@@ -23,17 +23,16 @@ const getcolor = (value) => {
   return color;
 }
 
-const HeatmapCell = ({value, isDimmed, isHighlighted}) => {
+const HeatmapCell = ({value, isHighlighted}) => {
   let color = getcolor(value);
   
-  if (isDimmed) return (
+  if (isHighlighted == false) return (
     <div className='container flex relative w-[100%] justify-center 
     items-center'>
       <div className={`rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700`}/>
     </div>
-  );
-
-  if (isHighlighted) return (
+  ) 
+  else if (isHighlighted == true) return (
     <div className='container flex relative w-[100%] justify-center 
     items-center'>
       <div className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>

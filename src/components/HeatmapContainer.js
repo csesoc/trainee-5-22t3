@@ -13,7 +13,7 @@ const HeatmapContainer = ({data, highlightProperty}) => {
 
   if (highlightProperty != null) {
     cells.map((x, i) => {
-      if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isDimmed={true}/>
+      if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={false}/>
       else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={true}/>
     });
   }
