@@ -1,4 +1,5 @@
 import React from 'react'
+import { heatmapCellStates } from './consts';
 
 function roundNearest100(num) {
   return Math.round(num / 100) * 100;
@@ -23,11 +24,29 @@ const getcolor = (value) => {
   return color;
 }
 
-const HeatmapCell = ({value, isHighlighted}) => {
+const HeatmapCell = ({value, state}) => {
   let color = getcolor(value);
+
+  console.log(state);
   
+  if (state === heatmapCellStates.isDimmed) return (
+    <div className='container flex relative w-[100%] justify-center 
+    items-center'>
+      <div className={`rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700`}/>
+    </div>
+  ) 
+  if (state === heatmapCellStates.isHighlighted) return (
+    <div className='container flex relative w-[100%] justify-center 
+    items-center'>
+      <div className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
+      <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 blur opacity-50 ${color}
+        hover:opacity-90 transition duration-500 `} 
+      />
+    </div>
+  );
+
   return (
-    <div className='container relative w-[100%]'>
+    <div className='container flex relative w-[100%]'>
       <div className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
       <div className={`rounded-xl pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
