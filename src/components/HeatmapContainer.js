@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from 'react'
+import { heatmapCellStates } from './consts';
 import HeatmapCell from './HeatmapCell'
 
-const HeatmapContainer = ({data, highlightProperty}) => {
+const HeatmapContainer = ({data, highlightProperties}) => {
   const cells = [];
   const generateCells = () => {
     Array(data.length).fill(1)
-      .map((ie, i) => cells.push({info: data[i], cell: <HeatmapCell key={Math.random()*1000000} value={data[i].value}/>})
+      .map((ie, i) => cells.push({info: data[i], cell: <HeatmapCell value={data[i].value} state={heatmapCellStates.default}/>})
     );
   }
 
   generateCells();
-
-  if (highlightProperty != null) {
-    cells.map((x, i) => {
-      if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={false}/>
-      else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} isHighlighted={true}/>
-    });
+  for (const highlightProperty of highlightProperties) {
+    cells.map((x) => cells.map((x, i) => {
+      if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isDimmed}/>
+      else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isHighlighted}/>
+    }))
   }
 
   return(
