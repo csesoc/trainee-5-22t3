@@ -12,10 +12,8 @@ const HeatmapContainer = ({data}) => {
   generateCells(data.length, data.map(x => x.value));  
 
   return (
-    <div className="grid grid-cols-30 gap-8 p-4 max-w-full" 
-         style={{
-            backgroundColor: `rgba(10, 10, 20)`
-          }}>
+    <div className="grid grid-cols-20 gap-4 p-4 max-w-full content-center w-3/4" 
+         >
       {cells.map(x => x.cell)}
     </div>
   )

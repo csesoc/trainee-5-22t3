@@ -1,6 +1,9 @@
 const SideMenu = () => {
+
     return (
-        <div className='bg-slate-400 inline-block absolute right-[70px] inset-y-32 w-[256px] h-[556px] '>Side Menu</div>
+        <div className='bg-[#201D26] inline-block w-1/4 rounded-3xl text-[#B7B1C7] p-[10px]'>
+            Side Menu
+        </div>
     )
 }
 
