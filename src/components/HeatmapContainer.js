@@ -11,12 +11,13 @@ const HeatmapContainer = ({data, highlightProperties, isPropertiesHighlighted}) 
   }
 
   generateCells();
-  if (isPropertiesHighlighted) for (const highlightProperty of highlightProperties) {
-    cells.map((x) => cells.map((x, i) => {
-      if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isDimmed}/>
-      else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isHighlighted}/>
-    }))
-  }
+  if (isPropertiesHighlighted) 
+    for (const highlightProperty of highlightProperties) {
+      cells.map((x) => cells.map((x, i) => {
+        if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isDimmed} info={x.info}/>
+        else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isHighlighted} info={x.info}/>
+      }))
+    }
 
   return(
     <div className="grid grid-cols-24 xl:grid-cols-24 lg:grid-cols-22 2xl:grid-cols-26 gap-8 p-4 max-w-full" style={{
