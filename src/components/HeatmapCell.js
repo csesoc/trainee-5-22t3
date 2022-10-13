@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
+import { heatmapCellStates } from './consts';
+import { useRef } from 'react';
 
 function roundNearest100(num) {
   return Math.round(num / 100) * 100;
@@ -33,9 +35,9 @@ const getcolor = (value) => {
   return color;
 }
 
-const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
+const HeatmapCell = ({value, state, info}) => {
   const ref = useRef();
-  let color = getcolor(value);  
+  let color = getcolor(value);
 
   const getTooltip = () => {
     return (<span class={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[800%] lg:w-[1200%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}>
@@ -43,15 +45,14 @@ const HeatmapCell = ({value, isDimmed, isHighlighted, info}) => {
       Note: {info.note}
     </span>)
   }
-
-  if (isDimmed) return (
+  
+  if (state === heatmapCellStates.isDimmed) return (
     <div className='group container flex relative w-[100%] justify-center 
     items-center'>
       <div className={`rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700`}/>
     </div>
-  );
-
-  if (isHighlighted) return (
+  ) 
+  if (state === heatmapCellStates.isHighlighted) return (
     <div className='group container flex relative w-[100%] justify-center 
     items-center'>
       <div ref={ref} className={`xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[100%] w-[100%] m-auto relative ${color}`}/>
