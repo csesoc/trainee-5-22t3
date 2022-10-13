@@ -26,7 +26,7 @@ const data = Array(200).fill(1)
 function App() {  
   return (
     <div className="App">
-      <HeatmapContainer data={data} highlightProperties={Array(0).fill(1)}/>
+      <HeatmapContainer data={data} highlightProperties={Array(1).fill(1)} isPropertiesHighlighted={true}/>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { heatmapCellStates } from './consts';
 import HeatmapCell from './HeatmapCell'
 
-const HeatmapContainer = ({data, highlightProperties}) => {
+const HeatmapContainer = ({data, highlightProperties, isPropertiesHighlighted}) => {
   const cells = [];
   const generateCells = () => {
     Array(data.length).fill(1)
@@ -11,7 +11,7 @@ const HeatmapContainer = ({data, highlightProperties}) => {
   }
 
   generateCells();
-  for (const highlightProperty of highlightProperties) {
+  if (isPropertiesHighlighted) for (const highlightProperty of highlightProperties) {
     cells.map((x) => cells.map((x, i) => {
       if (!x.info.wins.includes(highlightProperty) && !x.info.losses.includes(highlightProperty)) x.cell =  <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isDimmed}/>
       else x.cell = <HeatmapCell key={Math.random()*1000000} value={cells[i].info.value} state={heatmapCellStates.isHighlighted}/>
