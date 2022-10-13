@@ -40,7 +40,7 @@ const HeatmapCell = ({value, state, info}) => {
   let color = getcolor(value);
 
   const getTooltip = () => {
-    return (<span class={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[800%] lg:w-[1200%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}>
+    return (<span class={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[700%] lg:w-[850%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}>
       {info.date.yyyymmdd()}<br/> 
       Note: {info.note}
     </span>)
