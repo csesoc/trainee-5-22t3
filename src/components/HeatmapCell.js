@@ -47,14 +47,12 @@ const HeatmapCell = ({value, state, info}) => {
   }
   
   if (state === heatmapCellStates.isDimmed) return (
-    <div className='group container flex relative w-[100%] justify-center 
-    items-center'>
+    <div className='group container flex relative w-[100%] justify-center items-center'>
       <div className={`rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700`}/>
     </div>
   ) 
   if (state === heatmapCellStates.isHighlighted) return (
-    <div className='group container flex relative w-[100%] justify-center 
-    items-center'>
+    <div className='group container flex relative w-[100%] justify-center items-center'>
       <div ref={ref} className={`xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[100%] w-[100%] m-auto relative ${color}`}/>
       <div className={`xl:rounded-xl lg:rounded-lg md:rounded-md pb-[100%] w-[100%] m-auto absolute -inset-1 blur opacity-60 ${color}
         hover:opacity-90 transition duration-500 `} 
@@ -64,8 +62,7 @@ const HeatmapCell = ({value, state, info}) => {
   );
 
   return (
-    <div className='group container flex relative w-[100%] justify-center 
-    items-center'>
+    <div className='group container flex relative w-[100%] justify-center items-center'>
       <div ref={ref} className={`rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`}/>
       <div className={`xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[110%] w-[110%] m-auto absolute -inset-1 opacity-0 
         hover:opacity-100  ${color} hover:blur
