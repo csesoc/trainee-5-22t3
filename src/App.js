@@ -29,6 +29,7 @@ const data = Array(200)
   });
 
 function App() {
+  // Below exists as input for heatmap containers height and width not sure if this is the best solution
   const ref = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -37,17 +38,17 @@ function App() {
   const setHeatmapDimensions = () => {
     setWidth(ref.current.offsetWidth);
     setHeight(ref.current.offsetHeight);
-  }
+  };
 
   useLayoutEffect(() => {
     setHeatmapDimensions();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    window.addEventListener('resize', setHeatmapDimensions);
+    window.addEventListener("resize", setHeatmapDimensions);
     return () => {
-      window.removeEventListener('resize', setHeatmapDimensions)
-    }
+      window.removeEventListener("resize", setHeatmapDimensions);
+    };
   }, []);
 
   return (
