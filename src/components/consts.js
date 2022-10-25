@@ -1,5 +1,5 @@
 export const heatmapCellStates = {
-    isDimmed: "isDimmed",
-    isHighlighted: "isHighlighted",
-    default: "default"
+  isDimmed: "isDimmed",
+  isHighlighted: "isHighlighted",
+  default: "default"
 }

@@ -24,18 +24,17 @@ const data = Array(200).fill(1)
   });
 
 const MainPage = () => {
-    return (
-        <div className='p-[20px] relative h-screen w-screen bg-[#19181C]'>
-            <div className='bg-slate-700 block h-[75px]'>
-                <NavHeader/>
-            </div>
-            <div className="mt-[20px] mx-[50px] flex gap-[20px] items-stretch h-[556px]">
-                <HeatmapContainer data={data} highlightProperties={Array(1).fill(1)} isPropertiesHighlighted={true}/>
-                <SideMenu/>
-            </div>
-            
-        </div>
-    )
+  return (
+    <div className='p-[20px] relative h-screen w-screen bg-[#19181C]'>
+      <div className='bg-slate-700 block h-[75px]'>
+        <NavHeader/>
+      </div>
+      <div className="mt-[20px] mx-[50px] flex gap-[20px] items-stretch h-[556px]">
+        <HeatmapContainer data={data} highlightProperties={Array(1).fill(1)} isPropertiesHighlighted={true}/>
+        <SideMenu/>
+      </div>            
+    </div>
+  )
 }
 
 export default MainPage;
