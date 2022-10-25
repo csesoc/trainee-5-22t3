@@ -8,25 +8,28 @@ Date.prototype.addDays = function (days) {
   date.setDate(date.getDate() + days);
   return date;
 };
-const START_DATE = new Date("1/1/2022");
-const data = Array(200)
-  .fill(1)
-  .map((ie, i) => {
-    let date = START_DATE;
-    date = date.addDays(i);
-    return {
-      date: date,
-      index: i,
-      note: "placeholder",
-      wins: Array(10)
-        .fill(1)
-        .map((x) => Math.round(Math.random() * 10)),
-      losses: Array(10)
-        .fill(1)
-        .map((x) => Math.round(Math.random() * 10)),
-      value: Math.round(Math.random() * 1000),
-    };
-  });
+
+const fetchData = () => {
+  const START_DATE = new Date("1/1/2022");
+  return Array(200)
+    .fill(1)
+    .map((ie, i) => {
+      let date = START_DATE;
+      date = date.addDays(i);
+      return {
+        date: date,
+        index: i,
+        note: "placeholder",
+        wins: Array(10)
+          .fill(1)
+          .map((x) => Math.round(Math.random() * 10)),
+        losses: Array(10)
+          .fill(1)
+          .map((x) => Math.round(Math.random() * 10)),
+        value: Math.round(Math.random() * 1000),
+      };
+    });
+};
 
 function App() {
   // Below exists as input for heatmap containers height and width not sure if this is the best solution
@@ -51,13 +54,18 @@ function App() {
     };
   }, []);
 
+  const data = fetchData();
+  useEffect(() => {
+    const data = fetchData();
+  }, []);
+
   return (
     <div className="App">
       <div ref={ref} className="h-full">
         <HeatmapContainer
           data={data}
           highlightProperties={Array(1).fill(1)}
-          isPropertiesHighlighted={false}
+          isPropertiesHighlighted={true}
           height={height}
           width={width}
         />
