@@ -23,10 +23,10 @@ const getTooltip = (info) => {
 const groupStyle =
   "group container flex relative w-[100%] justify-center items-center";
 const cellBaseStyle = (color) => {
-  return `xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm pb-[100%] w-[100%] m-auto relative ${color}`;
+  return `rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`;
 };
 const baseGlowStyle =
-  "xl:rounded-xl lg:rounded-lg md:rounded-md sm:rounded-sm m-auto absolute -inset-1";
+  "rounded-xl m-auto absolute -inset-1";
 
 Date.prototype.yyyymmdd = function () {
   var mm = this.getMonth() + 1; // getMonth() is zero-based
