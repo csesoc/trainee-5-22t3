@@ -1,7 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
 import HeatmapContainer from "./components/HeatmapContainer";
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { heatmapCellStates } from "./components/consts";
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -34,7 +41,7 @@ const fetchData = () => {
 };
 
 function App() {
-  const [data, setData] = useState(fetchData());
+  const [data, setData] = useState(heatmapCellStates.loading);
   const ref = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -51,15 +58,13 @@ function App() {
 
   useEffect(() => {
     window.addEventListener("resize", setHeatmapDimensions);
+    setTimeout(() => {
+      const res = fetchData();
+      setData(res);
+    }, 2000); // wait so 2 seconds here
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };
-  }, []);
-
-  // Refreshes on every change
-  useEffect(() => {
-    const res = fetchData()
-    setData(fetchData());
   }, []);
 
   return (
@@ -68,7 +73,7 @@ function App() {
         <HeatmapContainer
           data={data}
           highlightProperties={Array(1).fill(1)}
-          isPropertiesHighlighted={false}
+          isPropertiesHighlighted={true}
           height={height}
           width={width}
         />

@@ -4,6 +4,7 @@ import {
   heatmapCellStates,
   HeatmapContainerGap,
   HeatmapContainerGapCSS,
+  HeatmapContainerMaxCells,
 } from "./consts";
 import HeatmapCell from "./HeatmapCell";
 
@@ -14,20 +15,32 @@ const HeatmapContainer = ({
   height,
   width,
 }) => {
+  // Handle null input first (i.e. data is stil loading)
   const cells = [];
-  
-  Array(data.length)
-    .fill(1)
-    .map((ie, i) =>
-      cells.push({
-        key: Math.random() * 1000000,
-        value: data[i].value,
-        state: heatmapCellStates.default,
-        info: data[i],
-      })
-    );
 
-  if (isPropertiesHighlighted) {
+  data === null
+    ? Array(HeatmapContainerMaxCells)
+        .fill(1)
+        .map((ie, i) =>
+          cells.push({
+            key: Math.random() * 1000000,
+            value: 0,
+            state: heatmapCellStates.loading,
+            info: null,
+          })
+        )
+    : Array(data.length)
+        .fill(1)
+        .map((ie, i) =>
+          cells.push({
+            key: Math.random() * 1000000,
+            value: data[i].value,
+            state: heatmapCellStates.default,
+            info: data[i],
+          })
+        );
+
+  if (isPropertiesHighlighted && data !== heatmapCellStates.loading) {
     for (const highlightProperty of highlightProperties) {
       cells.map((x) =>
         cells.map((x, i) => {
