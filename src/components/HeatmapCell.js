@@ -27,7 +27,10 @@ const cellBaseStyle = (state, color) => {
     state === heatmapCellStates.loading ? "bg-slate-900" : color
   }`;
 };
-const baseGlowStyle = "rounded-xl m-auto absolute -inset-0";
+
+const baseGlowStyle = (state) => {
+  return `rounded-xl m-auto absolute -inset-${state === heatmapCellStates.loading ? + "0" : "1"}`;
+}
 
 const getStyle = (state, color) => {
   if (state === heatmapCellStates.isDimmed) {
@@ -35,18 +38,18 @@ const getStyle = (state, color) => {
   }
 
   if (state === heatmapCellStates.isHighlighted) {
-    return `${baseGlowStyle} blur opacity-60 ${color}
+    return `${baseGlowStyle(state)} blur opacity-60 ${color}
     hover:opacity-90 transition duration-500 pb-[100%] w-[100%]`;
   }
 
   if (state === heatmapCellStates.default) {
-    return `${baseGlowStyle} opacity-0 
+    return `${baseGlowStyle(state)} opacity-0 
     hover:opacity-100  ${color} hover:blur pb-[110%] w-[110%]
     transition duration-200`;
   }
 
   if (state === heatmapCellStates.loading) {
-    return `${baseGlowStyle} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
+    return `${baseGlowStyle(state)} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
   }
 };
 

@@ -61,7 +61,7 @@ function App() {
     setTimeout(() => {
       const res = fetchData();
       setData(res);
-    }, 2000); // wait so 2 seconds here
+    }, 4000); // wait so 2 seconds here
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };
@@ -73,7 +73,7 @@ function App() {
         <HeatmapContainer
           data={data}
           highlightProperties={Array(1).fill(1)}
-          isPropertiesHighlighted={true}
+          isPropertiesHighlighted={false}
           height={height}
           width={width}
         />
