@@ -1,7 +1,7 @@
 import logo from "./logo.svg";
 import "./App.css";
 import HeatmapContainer from "./components/HeatmapContainer";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -34,6 +34,7 @@ const fetchData = () => {
 };
 
 function App() {
+  const [data, setData] = useState(fetchData());
   const ref = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -55,10 +56,10 @@ function App() {
     };
   }, []);
 
-  const data = fetchData();
   // Refreshes on every change
   useEffect(() => {
-    const data = fetchData();
+    const res = fetchData()
+    setData(fetchData());
   }, []);
 
   return (
