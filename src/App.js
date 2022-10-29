@@ -34,7 +34,6 @@ const fetchData = () => {
 };
 
 function App() {
-  // Below exists as input for heatmap containers height and width not sure if this is the best solution
   const ref = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -68,7 +67,7 @@ function App() {
         <HeatmapContainer
           data={data}
           highlightProperties={Array(1).fill(1)}
-          isPropertiesHighlighted={true}
+          isPropertiesHighlighted={false}
           height={height}
           width={width}
         />

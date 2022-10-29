@@ -15,6 +15,7 @@ const HeatmapContainer = ({
   width,
 }) => {
   const cells = [];
+  
   Array(data.length)
     .fill(1)
     .map((ie, i) =>

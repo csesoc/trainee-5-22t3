@@ -25,8 +25,24 @@ const groupStyle =
 const cellBaseStyle = (color) => {
   return `rounded-xl pb-[100%] w-[100%] m-auto relative ${color}`;
 };
-const baseGlowStyle =
-  "rounded-xl m-auto absolute -inset-1";
+const baseGlowStyle = "rounded-xl m-auto absolute -inset-1";
+
+const getStyle = (state, color) => {
+  if (state === heatmapCellStates.isDimmed) {
+    return "rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700";
+  }
+
+  if (state === heatmapCellStates.isHighlighted) {
+    return `${baseGlowStyle} blur opacity-60 ${color}
+    hover:opacity-90 transition duration-500 pb-[100%] w-[100%]`;
+  }
+
+  if (state === heatmapCellStates.default) {
+    return `${baseGlowStyle} opacity-0 
+    hover:opacity-100  ${color} hover:blur pb-[110%] w-[110%]
+    transition duration-200`;
+  }
+};
 
 Date.prototype.yyyymmdd = function () {
   var mm = this.getMonth() + 1; // getMonth() is zero-based
@@ -43,35 +59,13 @@ const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
   let color = "bg-theme-pinkblue-" + roundNearest100(value);
 
-  if (state === heatmapCellStates.isDimmed)
-    return (
-      <div className={`${groupStyle}`}>
-        <div
-          className={`rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700`}
-        />
-      </div>
-    );
-  if (state === heatmapCellStates.isHighlighted)
-    return (
-      <div className={`${groupStyle}`}>
-        <div ref={ref} className={`${cellBaseStyle(color)}`} />
-        <div
-          className={`${baseGlowStyle} blur opacity-60 ${color}
-        hover:opacity-90 transition duration-500 pb-[100%] w-[100%]`}
-        />
-        {getTooltip(info)}
-      </div>
-    );
-
   return (
     <div className={`${groupStyle}`}>
-      <div ref={ref} className={`${cellBaseStyle(color)}`} />
-      <div
-        className={`${baseGlowStyle} opacity-0 
-        hover:opacity-100  ${color} hover:blur pb-[110%] w-[110%]
-        transition duration-200`}
-      />
-      {getTooltip(info)}
+      {state !== heatmapCellStates.isDimmed ? (
+        <div ref={ref} className={`${cellBaseStyle(color)}`} />
+      ) : null}
+      <div className={`${getStyle(state, color)}`} />
+      {state !== heatmapCellStates.isDimmed ? getTooltip(info) : null}
     </div>
   );
 };
