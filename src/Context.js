@@ -10,7 +10,7 @@ export const Context = createContext({
 
 const ContextProvider = ({ children }) => {
     const [cellsData, setCellsData] = useState(heatmapCellStates.loading);
-    const [selectedDate, setSelectedDate] = useState(Date.now);
+    const [selectedDate, setSelectedDate] = useState(null);
 
     const initialContext = {
         cellsData,
