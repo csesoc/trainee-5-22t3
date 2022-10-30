@@ -18,11 +18,11 @@ const SideMenu = () => {
     <div className='bg-[#201D26] inline-block w-1/4 rounded-3xl text-[#B7B1C7] p-[10px] items-center'>
       <div>
         Do
-        <HabitList list={doHabits}/>
+        <HabitList list={doHabits} />
       </div>
       <div>
         Don't Do
-        <HabitList list={dontHabits}/>
+        <HabitList list={dontHabits} />
       </div>
     </div>
   )

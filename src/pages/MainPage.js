@@ -2,10 +2,11 @@ import NavHeader from "../components/NavHeader";
 import SideMenu from "../components/SideMenu";
 import HeatmapContainer from '../components/HeatmapContainer';
 import { useRef } from 'react';
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { heatmapCellStates } from "../components/consts"
+import { Context } from "../Context";
 
-Date.prototype.addDays = function(days) {
+Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
@@ -19,9 +20,9 @@ const dummyData = Array(200).fill(1)
       date: date,
       index: i,
       note: 'placeholder',
-      wins: Array(10).fill(1).map(x => Math.round(Math.random()*10)),
-      losses: Array(10).fill(1).map(x => Math.round(Math.random()*10)),
-      value: Math.round(Math.random()*1000)
+      wins: Array(10).fill(1).map(x => Math.round(Math.random() * 10)),
+      losses: Array(10).fill(1).map(x => Math.round(Math.random() * 10)),
+      value: Math.round(Math.random() * 1000)
     };
   });
 
@@ -30,7 +31,11 @@ const MainPage = () => {
     return dummyData;
   };
 
-  const [data, setData] = useState(heatmapCellStates.loading);
+  const {
+    cellsData,
+    setCellsData
+  } = useContext(Context);
+
   const ref = useRef(null);
 
   const [width, setWidth] = useState(0);
@@ -49,7 +54,7 @@ const MainPage = () => {
     window.addEventListener("resize", setHeatmapDimensions);
     setTimeout(() => {
       const res = fetchData();
-      setData(res);
+      setCellsData(res);
     }, 4000); // wait so 2 seconds here
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
@@ -59,12 +64,12 @@ const MainPage = () => {
   return (
     <div className='p-[20px] relative h-screen w-screen bg-[#19181C]'>
       <div className='bg-slate-700 block h-[75px]'>
-        <NavHeader/>
+        <NavHeader />
       </div>
       <div className="flex flex-row flex-1">
         <div ref={ref} className="h-full w-[80%]">
           <HeatmapContainer
-            data={data}
+            data={cellsData}
             highlightProperties={Array(1).fill(1)}
             isPropertiesHighlighted={false}
             height={height}
@@ -72,9 +77,9 @@ const MainPage = () => {
           />
         </div>
         <div className="flex-1">
-          <SideMenu/>  
-        </div>   
-      </div>         
+          <SideMenu />
+        </div>
+      </div>
     </div>
   )
 }
