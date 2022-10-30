@@ -9,7 +9,9 @@ const HabitList = ({ list }) => {
     setHabits(list);
   }, []);
 
-  const handleClick = () => {}
+  const handleClick = () => {
+    
+  }
 
   return (
     <div>
