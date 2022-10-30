@@ -3,15 +3,20 @@ import { heatmapCellStates } from "./components/consts";
 
 export const Context = createContext({
     cellsData: [],
-    setCellsData: () => { }
+    setCellsData: () => { },
+    selectedDate: null,
+    setSelectedDate: () => { }
 })
 
 const ContextProvider = ({ children }) => {
     const [cellsData, setCellsData] = useState(heatmapCellStates.loading);
+    const [selectedDate, setSelectedDate] = useState(Date.now);
 
     const initialContext = {
         cellsData,
-        setCellsData
+        setCellsData,
+        selectedDate,
+        setSelectedDate
     }
 
     return (
