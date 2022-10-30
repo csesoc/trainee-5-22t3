@@ -30,8 +30,10 @@ const cellBaseStyle = (state, color) => {
 };
 
 const baseGlowStyle = (state) => {
-  return `rounded-xl m-auto absolute -inset-${state === heatmapCellStates.loading ? + "0" : "1"}`;
-}
+  return `rounded-xl m-auto absolute -inset-${
+    state === heatmapCellStates.loading ? +"0" : "1"
+  }`;
+};
 
 const getStyle = (state, color) => {
   if (state === heatmapCellStates.isDimmed) {
@@ -50,7 +52,9 @@ const getStyle = (state, color) => {
   }
 
   if (state === heatmapCellStates.loading) {
-    return `${baseGlowStyle(state)} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
+    return `${baseGlowStyle(
+      state
+    )} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
   }
 };
 
@@ -68,19 +72,16 @@ Date.prototype.yyyymmdd = function () {
 const setDate = (setSelectedDate, date, oldDate) => {
   console.log(oldDate);
   setSelectedDate(setSelectedDate(date));
-}
+};
 
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
-  const {
-    selectedDate,
-    setSelectedDate
-  } = useContext(Context);
+  const { selectedDate, setSelectedDate } = useContext(Context);
   let color = "bg-theme-pinkblue-" + roundNearest100(value);
 
   const handleClick = () => {
     setSelectedDate(info.date);
-  }
+  };
 
   return (
     <div className={`${groupStyle}`}>
