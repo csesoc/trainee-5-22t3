@@ -61,16 +61,20 @@ const MainPage = () => {
       <div className='bg-slate-700 block h-[75px]'>
         <NavHeader/>
       </div>
-      <div ref={ref} className="mt-[20px] mx-[50px] flex gap-[20px] items-stretch h-[556px]">
-        <HeatmapContainer
-          data={data}
-          highlightProperties={Array(1).fill(1)}
-          isPropertiesHighlighted={false}
-          height={height}
-          width={width}
-        />
-        <SideMenu/>
-      </div>            
+      <div className="flex flex-row flex-1">
+        <div ref={ref} className="h-full w-[80%]">
+          <HeatmapContainer
+            data={data}
+            highlightProperties={Array(1).fill(1)}
+            isPropertiesHighlighted={false}
+            height={height}
+            width={width}
+          />
+        </div>
+        <div className="flex-1">
+          <SideMenu/>  
+        </div>   
+      </div>         
     </div>
   )
 }
