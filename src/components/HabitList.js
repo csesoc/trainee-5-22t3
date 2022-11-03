@@ -5,11 +5,11 @@ import { Context } from "../Context";
 const HabitList = ({ type }) => {
   const [habits, setHabits] = useState([]);
   const [input, setInput] = useState("");
-  const { winHabits, setWinHabits, lossHabits, setLossHabits } = useContext(Context);
+  const { winHabits, lossHabits } = useContext(Context);
 
   useEffect(() => {
     setHabits(type === "win" ? winHabits : lossHabits);
-  }, []);
+  }, [winHabits, lossHabits, type]);
   
   const addHabit = (e) => {
     e.preventDefault();
@@ -18,23 +18,17 @@ const HabitList = ({ type }) => {
     setHabits(newHabits);
   }
 
+  const deleteHabit = (habit) => {
+    let newHabits = habits.filter(h => h !== habit);
+    setHabits(newHabits);
+  }
+
   return (
     <div>
-      {habits.map((x) => {
-        return (
-          <div className="flex p-3">
-            <input
-              type="checkbox"
-              className="rounded"
-              onChange={() => console.log(x)}
-            />
-            {x}
-          </div>
-        );
-      })}
+      {habits.map((x) => <Habit habit={x} deleteHabit={deleteHabit} type={type}/>)}
       <form onSubmit={addHabit}>
-        <input type="text" id="name" name="name" className="rounded m-2" onChange={e => setInput(e.target.value)}/>
-        <button>+</button>
+        <input type="text" className="rounded w-[175px] m-2" onChange={e => setInput(e.target.value)}/>
+        <button className="bg-pink-400 text-[#201D26] px-[8px] pb-[3px] rounded-2xl">+</button>
       </form>
     </div>
   );
