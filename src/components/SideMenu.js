@@ -6,7 +6,7 @@ const SideMenu = () => {
   const { selectedDate } = useContext(Context);
 
   return (
-    <div className="bg-[#201D26] rounded-3xl text-[#B7B1C7] p-[10px] items-center m-3">
+    <div className="bg-[#1a1d22] rounded-3xl text-[#B7B1C7] p-[10px] items-center m-3">
       {selectedDate !== null
         ? selectedDate.toDateString()
         : new Date().toDateString()}

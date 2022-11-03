@@ -64,7 +64,7 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className="p-[20px] relative h-screen w-screen bg-[#19181C]">
+    <div className="p-[20px] relative h-[100%] w-[100%] bg-[#16181c]">
       <div className="bg-slate-700 block h-[75px]">
         <NavHeader />
       </div>
