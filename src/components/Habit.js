@@ -3,6 +3,7 @@ import { Context } from "../Context";
 
 const Habit = ({ habit, deleteHabit, type }) => {
   const [text, setText] = useState("");
+  const [checked, setChecked] = useState(false);
   const { 
     selectedDate,
     cellsData,
@@ -18,12 +19,14 @@ const Habit = ({ habit, deleteHabit, type }) => {
     let newCellsData = [...cellsData]
     if (type === "win") {
       if (e.target.checked) {
+        setChecked(true);
         newCellsData[index].value += 200;
       } else {
         newCellsData[index].value -= 200;
       }
     } else {
       if (e.target.checked) {
+        setChecked(true);
         newCellsData[index].value -= 200;
       } else {
         newCellsData[index].value += 200;
@@ -32,10 +35,14 @@ const Habit = ({ habit, deleteHabit, type }) => {
     setCellsData(newCellsData);
   }
 
+  useEffect(() => {
+    setChecked(false);
+  }, [selectedDate])
+
   return (
     <div className="flex justify-between">
       <div className="flex gap-[10px] pl-[20px]">
-        <input type="checkbox" className="rounded" onChange={handleCheck}/>
+        <input type="checkbox" className="rounded text-pink-400" onChange={handleCheck} checked={checked}/>
         {text}
       </div>
       <div className="pr-[20px]">
