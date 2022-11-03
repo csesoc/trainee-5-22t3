@@ -1,28 +1,33 @@
 import NavHeader from "../components/NavHeader";
 import SideMenu from "../components/SideMenu";
-import HeatmapContainer from '../components/HeatmapContainer';
-import { useRef } from 'react';
+import HeatmapContainer from "../components/HeatmapContainer";
+import { useRef } from "react";
 import { useContext, useEffect, useState, useLayoutEffect } from "react";
-import { heatmapCellStates } from "../components/consts"
+import { heatmapCellStates } from "../components/consts";
 import { Context } from "../Context";
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
-}
-const START_DATE = new Date('1/1/2022');
-const dummyData = Array(200).fill(1)
+};
+const START_DATE = new Date("1/1/2022");
+const dummyData = Array(200)
+  .fill(1)
   .map((ie, i) => {
     let date = START_DATE;
     date = date.addDays(i);
     return {
       date: date,
       index: i,
-      note: 'placeholder',
-      wins: Array(10).fill(1).map(x => Math.round(Math.random() * 10)),
-      losses: Array(10).fill(1).map(x => Math.round(Math.random() * 10)),
-      value: Math.round(Math.random() * 1000)
+      note: "placeholder",
+      wins: Array(10)
+        .fill(1)
+        .map((x) => Math.round(Math.random() * 10)),
+      losses: Array(10)
+        .fill(1)
+        .map((x) => Math.round(Math.random() * 10)),
+      value: Math.round(Math.random() * 1000),
     };
   });
 
@@ -31,10 +36,7 @@ const MainPage = () => {
     return dummyData;
   };
 
-  const {
-    cellsData,
-    setCellsData
-  } = useContext(Context);
+  const { cellsData, setCellsData } = useContext(Context);
 
   const ref = useRef(null);
 
@@ -62,8 +64,8 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className='p-[20px] relative h-screen w-screen bg-[#19181C]'>
-      <div className='bg-slate-700 block h-[75px]'>
+    <div className="p-[20px] relative h-screen w-screen bg-[#19181C]">
+      <div className="bg-slate-700 block h-[75px]">
         <NavHeader />
       </div>
       <div className="flex flex-row flex-1">
@@ -81,7 +83,7 @@ const MainPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MainPage;

@@ -1,6 +1,7 @@
 import React from "react";
 import { heatmapCellStates } from "./consts";
-import { useRef } from "react";
+import { useRef, useContext } from "react";
+import { Context } from "../Context";
 
 const roundNearest100 = (num) => {
   return Math.round(num / 100) * 100;
@@ -29,8 +30,10 @@ const cellBaseStyle = (state, color) => {
 };
 
 const baseGlowStyle = (state) => {
-  return `rounded-xl m-auto absolute -inset-${state === heatmapCellStates.loading ? + "0" : "1"}`;
-}
+  return `rounded-xl m-auto absolute -inset-${
+    state === heatmapCellStates.loading ? +"0" : "1"
+  }`;
+};
 
 const getStyle = (state, color) => {
   if (state === heatmapCellStates.isDimmed) {
@@ -49,7 +52,9 @@ const getStyle = (state, color) => {
   }
 
   if (state === heatmapCellStates.loading) {
-    return `${baseGlowStyle(state)} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
+    return `${baseGlowStyle(
+      state
+    )} animate-pulse pb-[100%] w-[100%] bg-slate-700`;
   }
 };
 
@@ -64,16 +69,26 @@ Date.prototype.yyyymmdd = function () {
   ].join("/");
 };
 
+const setDate = (setSelectedDate, date, oldDate) => {
+  console.log(oldDate);
+  setSelectedDate(setSelectedDate(date));
+};
+
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
+  const { selectedDate, setSelectedDate } = useContext(Context);
   let color = "bg-theme-pinkblue-" + roundNearest100(value);
+
+  const handleClick = () => {
+    setSelectedDate(info.date);
+  };
 
   return (
     <div className={`${groupStyle}`}>
       {state !== heatmapCellStates.isDimmed ? (
         <div ref={ref} className={`${cellBaseStyle(state, color)}`} />
       ) : null}
-      <div className={`${getStyle(state, color)}`} />
+      <div onClick={handleClick} className={`${getStyle(state, color)}`} />
       {state !== heatmapCellStates.isDimmed &&
       state !== heatmapCellStates.loading
         ? getTooltip(info)
