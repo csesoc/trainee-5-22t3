@@ -78,7 +78,7 @@ const MainPage = () => {
             width={width}
           />
         </div>
-        <div className="flex-1">
+        <div className="w-[20%]">
           <SideMenu />
         </div>
       </div>
