@@ -73,7 +73,7 @@ const MainPage = () => {
           <HeatmapContainer
             data={cellsData}
             highlightProperties={Array(1).fill(1)}
-            isPropertiesHighlighted={false}
+            isPropertiesHighlighted={true}
             height={height}
             width={width}
           />
