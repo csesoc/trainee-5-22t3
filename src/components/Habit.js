@@ -22,6 +22,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
         setChecked(true);
         newCellsData[index].value += 200;
       } else {
+        setChecked(false);
         newCellsData[index].value -= 200;
       }
     } else {
@@ -29,6 +30,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
         setChecked(true);
         newCellsData[index].value -= 200;
       } else {
+        setChecked(false);
         newCellsData[index].value += 200;
       }
     }
