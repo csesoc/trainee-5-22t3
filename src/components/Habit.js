@@ -17,6 +17,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
   const handleCheck = e => {
     let index = cellsData.indexOf(cellsData.find(x => x.date === selectedDate));
     let newCellsData = [...cellsData]
+    
     if (type === "win") {
       if (e.target.checked) {
         setChecked(true);
@@ -44,7 +45,12 @@ const Habit = ({ habit, deleteHabit, type }) => {
   return (
     <div className="flex justify-between">
       <div className="flex gap-[10px] pl-[20px]">
-        <input type="checkbox" className="rounded text-pink-400" onChange={handleCheck} checked={checked}/>
+        <input 
+          type="checkbox" 
+          className="rounded text-pink-400" 
+          onChange={handleCheck} 
+          checked={checked}
+        />
         {text}
       </div>
       <div className="pr-[20px]">
