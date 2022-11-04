@@ -1,36 +1,22 @@
 import HabitList from "./HabitList";
-import { useEffect, useState, useContext } from "react";
+import { useContext } from "react";
 import { Context } from "../Context";
 
 const SideMenu = () => {
-  const [doHabits, setDoHabits] = useState([]);
-  const [dontHabits, setDontHabits] = useState([]);
-  const { selectedDate, setSelectedDate } = useContext(Context);
-
-  useEffect(() => {
-    setDoHabits(["make bed", "drink water", "study"]);
-  }, []);
-
-  useEffect(() => {
-    setDontHabits(["tiktok", "sleep late", "nap"]);
-  }, []);
-
-  const handleClick = () => {
-    console.log(selectedDate);
-  };
+  const { selectedDate } = useContext(Context);
 
   return (
-    <div className="bg-[#201D26] inline-block w-1/4 rounded-3xl text-[#B7B1C7] p-[10px] items-center">
+    <div className="bg-[#1a1d22] rounded-3xl min-h-[500px] text-[#B7B1C7] p-[10px] items-center m-3">
       {selectedDate !== null
         ? selectedDate.toDateString()
         : new Date().toDateString()}
-      <div>
+      <div className="mb-[30px]">
         Do
-        <HabitList list={doHabits} />
+        <HabitList type={"win"} />
       </div>
       <div>
         Don't Do
-        <HabitList list={dontHabits} />
+        <HabitList type={"loss"} />
       </div>
     </div>
   );

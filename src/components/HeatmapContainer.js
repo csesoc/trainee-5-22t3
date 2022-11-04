@@ -66,9 +66,6 @@ const HeatmapContainer = ({
       className={`grid ${
         "grid-cols-" + numCols
       } ${HeatmapContainerGapCSS} p-4 max-w-full`}
-      style={{
-        backgroundColor: `rgba(10, 10, 20)`,
-      }}
     >
       {cellsToRender.map(({ key, value, state, info }) => (
         <HeatmapCell key={key} value={value} state={state} info={info} />
