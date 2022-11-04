@@ -16,22 +16,19 @@ const Habit = ({ habit, deleteHabit, type }) => {
 
   const handleCheck = e => {
     let index = cellsData.indexOf(cellsData.find(x => x.date === selectedDate));
-    let newCellsData = [...cellsData]
+    let newCellsData = [...cellsData];
+    setChecked(e.target.checked);
     
     if (type === "win") {
       if (e.target.checked) {
-        setChecked(true);
         newCellsData[index].value += 200;
       } else {
-        setChecked(false);
         newCellsData[index].value -= 200;
       }
     } else {
       if (e.target.checked) {
-        setChecked(true);
         newCellsData[index].value -= 200;
       } else {
-        setChecked(false);
         newCellsData[index].value += 200;
       }
     }
