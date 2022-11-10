@@ -3,8 +3,14 @@ import { heatmapCellStates } from "./consts";
 import { useRef, useContext } from "react";
 import { Context } from "../Context";
 
+const restrict = (x, min, max) => {
+  if (x >= min && x <= max) return x;
+  if (x > max) return max;
+  if (x < min) return min;
+}
+
 const roundNearest100 = (num) => {
-  return Math.round(num / 100) * 100;
+  return restrict(Math.round(num / 100) * 100, 0, 1000);
 };
 
 const getTooltip = (info) => {
@@ -69,14 +75,9 @@ Date.prototype.yyyymmdd = function () {
   ].join("/");
 };
 
-const setDate = (setSelectedDate, date, oldDate) => {
-  console.log(oldDate);
-  setSelectedDate(setSelectedDate(date));
-};
-
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
-  const { selectedDate, setSelectedDate } = useContext(Context);
+  const { setSelectedDate } = useContext(Context);
   let color = "bg-theme-pinkblue-" + roundNearest100(value);
 
   const handleClick = () => {

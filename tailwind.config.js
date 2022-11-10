@@ -85,7 +85,7 @@ module.exports = {
       },
       colors: {
         'theme-pinkblue': {
-          0: 'rgba(0, 100, 200)',
+          0: '#36383F',
           100: 'rgba(25, 100, 200)',
           200: 'rgba(51, 100, 200)',
           300: 'rgba(77, 100, 200)',
