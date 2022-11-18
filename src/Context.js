@@ -10,8 +10,9 @@ export const Context = createContext({
   setWinHabits: () => {},
   lossHabits: [],
   setLossHabits: () => {},
-  highlightHabit: null,
-  setHighLightHabit: () => {}
+  highlightHabit: [],
+  addHighlightHabit: (habit) => {},
+  removeHighlightHabit: (habit) => {},
 });
 
 const ContextProvider = ({ children }) => {
@@ -19,7 +20,23 @@ const ContextProvider = ({ children }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [winHabits, setWinHabits] = useState([]);
   const [lossHabits, setLossHabits] = useState([]);
-  const [highlightHabit, setHighlightHabit] = useState(null);
+  const [highlightHabit, setHighlightHabit] = useState([]);
+
+  const addHighlightHabit = (habit) => {
+    setHighlightHabit((h) => {
+      let newList = [...h];
+      newList.push(habit);
+      return newList;
+    });
+  };
+
+  const removeHighlightHabit = (habit) => {
+    setHighlightHabit((h) => {
+      let newList = [...h];
+      newList = newList.filter((x) => x !== habit);
+      return newList;
+    });
+  };
 
   const initialContext = {
     cellsData,
@@ -31,7 +48,8 @@ const ContextProvider = ({ children }) => {
     lossHabits,
     setLossHabits,
     highlightHabit,
-    setHighlightHabit
+    addHighlightHabit,
+    removeHighlightHabit,
   };
 
   return <Context.Provider value={initialContext}>{children}</Context.Provider>;

@@ -9,7 +9,8 @@ const Habit = ({ habit, deleteHabit, type }) => {
     cellsData,
     setCellsData,
     highlightHabit,
-    setHighlightHabit,
+    addHighlightHabit,
+    removeHighlightHabit
   } = useContext(Context);
 
   let index = cellsData.indexOf(
@@ -55,7 +56,6 @@ const Habit = ({ habit, deleteHabit, type }) => {
   };
 
   useEffect(() => {
-    console.log(cellsData, index, selectedDate);
     setChecked(cellsData[index][type].includes(text));
   }, [selectedDate]);
 
@@ -74,7 +74,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"
+          viewBox="0 0 24 24"s
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
@@ -86,8 +86,8 @@ const Habit = ({ habit, deleteHabit, type }) => {
           />
         </svg>
       </button>
-      {highlightHabit !== text ? (
-        <button className="pr-[20px]" onClick={() => setHighlightHabit(text)}>
+      {!highlightHabit.includes(text) ? (
+        <button className="pr-[20px]" onClick={() => addHighlightHabit(text)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -104,7 +104,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
           </svg>
         </button>
       ) : (
-        <button className="pr-[20px]" onClick={() => setHighlightHabit(null)}>
+        <button className="pr-[20px]" onClick={() => removeHighlightHabit(text)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

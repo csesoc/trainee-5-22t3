@@ -73,7 +73,7 @@ const MainPage = () => {
     setTimeout(() => {
       const res = fetchData();
       setCellsData(res);
-    }, 2000); // wait so 2 seconds here
+    }, 1000); // wait so 2 seconds here
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };
@@ -86,8 +86,8 @@ const MainPage = () => {
         <div ref={ref} className="h-full w-[80%]">
           <HeatmapContainer
             data={cellsData}
-            highlightProperties={Array(1).fill(1)}
-            isPropertiesHighlighted={highlightHabit === null ? false : true}
+            highlightProperties={highlightHabit}
+            isPropertiesHighlighted={highlightHabit === [] ? false : true}
             height={height}
             width={width}
           />

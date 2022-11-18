@@ -27,8 +27,7 @@ const getTooltip = (info) => {
   );
 };
 
-const groupStyle =
-  "group container flex relative w-[100%] justify-center items-center";
+const groupStyle = "group container flex relative w-[100%] justify-center items-center";
 const cellBaseStyle = (state, color) => {
   return `rounded-xl pb-[100%] w-[100%] m-auto relative ${
     state === heatmapCellStates.loading ? "bg-slate-900" : color
@@ -57,6 +56,11 @@ const getStyle = (state, color) => {
     transition duration-200`;
   }
 
+  if (state === heatmapCellStates.isSelectedDate) {
+    return `${baseGlowStyle(state)} blur opacity-100 ${color}
+    transition duration-500 pb-[110%] w-[110%]`;
+  }
+
   if (state === heatmapCellStates.loading) {
     return `${baseGlowStyle(
       state
@@ -77,8 +81,10 @@ Date.prototype.yyyymmdd = function () {
 
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
-  const { setSelectedDate } = useContext(Context);
+  const { setSelectedDate, selectedDate } = useContext(Context);
   let color = value !== -1 ? "bg-theme-pinkblue-" + roundNearest100(value) : "bg-slate-700";
+
+  if (info && selectedDate === info.date) state = heatmapCellStates.isSelectedDate;
 
   const handleClick = () => {
     setSelectedDate(info.date);
