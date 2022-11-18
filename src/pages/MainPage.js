@@ -87,7 +87,7 @@ const MainPage = () => {
           <HeatmapContainer
             data={cellsData}
             highlightProperties={highlightHabit}
-            isPropertiesHighlighted={highlightHabit === [] ? false : true}
+            isPropertiesHighlighted={highlightHabit.length === 0 ? false : true}
             height={height}
             width={width}
           />
