@@ -43,7 +43,7 @@ const dummyData = Array(100)
       note: "placeholder",
       wins: [],
       losses: [],
-      value: 0,
+      value: -1,
     };
   }).reverse();
 
@@ -52,7 +52,7 @@ const MainPage = () => {
     return dummyData;
   };
 
-  const { cellsData, setCellsData } = useContext(Context);
+  const { cellsData, setCellsData, highlightHabit } = useContext(Context);
 
   const ref = useRef(null);
 
@@ -87,7 +87,7 @@ const MainPage = () => {
           <HeatmapContainer
             data={cellsData}
             highlightProperties={Array(1).fill(1)}
-            isPropertiesHighlighted={false}
+            isPropertiesHighlighted={highlightHabit === null ? false : true}
             height={height}
             width={width}
           />

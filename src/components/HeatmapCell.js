@@ -78,7 +78,7 @@ Date.prototype.yyyymmdd = function () {
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
   const { setSelectedDate } = useContext(Context);
-  let color = "bg-theme-pinkblue-" + roundNearest100(value);
+  let color = value !== -1 ? "bg-theme-pinkblue-" + roundNearest100(value) : "bg-slate-700";
 
   const handleClick = () => {
     setSelectedDate(info.date);
