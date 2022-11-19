@@ -14,7 +14,6 @@ const HeatmapContainer = ({
   height,
   width,
 }) => {
-  console.log(highlightProperties);
 
   // Handle null input first (i.e. data is stil loading)
   let cells = [];
