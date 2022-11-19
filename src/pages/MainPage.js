@@ -43,7 +43,7 @@ const dummyData = Array(100)
       note: "placeholder",
       wins: [],
       losses: [],
-      value: 0,
+      value: -1,
     };
   }).reverse();
 
@@ -52,7 +52,7 @@ const MainPage = () => {
     return dummyData;
   };
 
-  const { cellsData, setCellsData } = useContext(Context);
+  const { cellsData, setCellsData, highlightHabit } = useContext(Context);
 
   const ref = useRef(null);
 
@@ -73,7 +73,7 @@ const MainPage = () => {
     setTimeout(() => {
       const res = fetchData();
       setCellsData(res);
-    }, 2000); // wait so 2 seconds here
+    }, 1000); // wait so 2 seconds here
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };
@@ -86,8 +86,8 @@ const MainPage = () => {
         <div ref={ref} className="h-full w-[80%]">
           <HeatmapContainer
             data={cellsData}
-            highlightProperties={Array(1).fill(1)}
-            isPropertiesHighlighted={false}
+            highlightProperties={highlightHabit}
+            isPropertiesHighlighted={highlightHabit.length === 0 ? false : true}
             height={height}
             width={width}
           />

@@ -7,7 +7,7 @@ const restrict = (x, min, max) => {
   if (x >= min && x <= max) return x;
   if (x > max) return max;
   if (x < min) return min;
-}
+};
 
 const roundNearest100 = (num) => {
   return restrict(Math.round(num / 100) * 100, 0, 1000);
@@ -57,6 +57,11 @@ const getStyle = (state, color) => {
     transition duration-200`;
   }
 
+  if (state === heatmapCellStates.isSelectedDate) {
+    return `${baseGlowStyle(state)} blur opacity-100 ${color}
+    transition duration-500 pb-[110%] w-[110%]`;
+  }
+
   if (state === heatmapCellStates.loading) {
     return `${baseGlowStyle(
       state
@@ -77,8 +82,14 @@ Date.prototype.yyyymmdd = function () {
 
 const HeatmapCell = ({ value, state, info }) => {
   const ref = useRef();
-  const { setSelectedDate } = useContext(Context);
-  let color = "bg-theme-pinkblue-" + roundNearest100(value);
+  const { setSelectedDate, selectedDate } = useContext(Context);
+  let color =
+    value !== -1
+      ? "bg-theme-pinkblue-" + roundNearest100(value)
+      : "bg-slate-700";
+
+  if (info && selectedDate === info.date && state != heatmapCellStates.isDimmed)
+    state = heatmapCellStates.isSelectedDate;
 
   const handleClick = () => {
     setSelectedDate(info.date);

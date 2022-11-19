@@ -14,10 +14,9 @@ const HeatmapContainer = ({
   height,
   width,
 }) => {
-  console.log(height, width);
 
   // Handle null input first (i.e. data is stil loading)
-  const cells = [];
+  let cells = [];
 
   data === null
     ? Array(HeatmapContainerMaxCells)
@@ -42,16 +41,12 @@ const HeatmapContainer = ({
         );
 
   if (isPropertiesHighlighted && data !== heatmapCellStates.loading) {
-    for (const highlightProperty of highlightProperties) {
-      cells.map((x) =>
-        cells.forEach((x, i) => {
-          !x.info.wins.includes(highlightProperty) &&
-          !x.info.losses.includes(highlightProperty)
-            ? (x.state = heatmapCellStates.isDimmed)
-            : (x.state = heatmapCellStates.isHighlighted);
-        })
-      );
-    }
+    cells.forEach((x) =>
+      !x.info.wins.some(x => highlightProperties.includes(x)) &&
+      !x.info.losses.some(x => highlightProperties.includes(x))
+        ? (x.state = heatmapCellStates.isDimmed)
+        : (x.state = heatmapCellStates.isHighlighted)
+    );
   }
 
   const numCols = Math.floor(
