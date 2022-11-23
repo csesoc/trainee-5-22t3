@@ -23,7 +23,7 @@ const ContextProvider = ({ children }) => {
   const [highlightHabit, setHighlightHabit] = useState([]);
 
   // const adjustHabitValue = (newValue) => {
-  //   post();
+  //   fetch('localhost:5000/updateCellValue')
   //   // update locally on success
   // }
 
