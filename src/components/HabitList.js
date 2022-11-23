@@ -12,6 +12,7 @@ const HabitList = ({ type }) => {
   }, [winHabits, lossHabits, type]);
 
   const addHabit = (e) => {
+    // DB-TODO
     e.preventDefault();
     if (input === "" || habits.includes(input)) return;
     let newHabits = [...habits];
@@ -21,6 +22,7 @@ const HabitList = ({ type }) => {
   };
 
   const deleteHabit = (habit) => {
+    // DB-TODO
     let newHabits = habits.filter((h) => h !== habit);
     setHabits(newHabits);
   };

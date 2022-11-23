@@ -3,16 +3,16 @@ import { heatmapCellStates } from "./components/consts";
 
 export const Context = createContext({
   cellsData: [],
-  setCellsData: () => {},
+  setCellsData: () => { },
   selectedDate: null,
-  setSelectedDate: () => {},
+  setSelectedDate: () => { },
   winHabits: [],
-  setWinHabits: () => {},
+  setWinHabits: () => { },
   lossHabits: [],
-  setLossHabits: () => {},
+  setLossHabits: () => { },
   highlightHabit: [],
-  addHighlightHabit: (habit) => {},
-  removeHighlightHabit: (habit) => {},
+  addHighlightHabit: (habit) => { },
+  removeHighlightHabit: (habit) => { },
 });
 
 const ContextProvider = ({ children }) => {
@@ -21,6 +21,11 @@ const ContextProvider = ({ children }) => {
   const [winHabits, setWinHabits] = useState([]);
   const [lossHabits, setLossHabits] = useState([]);
   const [highlightHabit, setHighlightHabit] = useState([]);
+
+  // const adjustHabitValue = (newValue) => {
+  //   post();
+  //   // update locally on success
+  // }
 
   const addHighlightHabit = (habit) => {
     setHighlightHabit((h) => {

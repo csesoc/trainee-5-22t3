@@ -49,6 +49,7 @@ const dummyData = Array(100)
 
 const MainPage = () => {
   const fetchData = () => {
+    // DB-TODO, fetch and load data into context on initial render
     return dummyData;
   };
 
@@ -74,6 +75,12 @@ const MainPage = () => {
       const res = fetchData();
       setCellsData(res);
     }, 1000); // wait so 2 seconds here
+
+    // EXAMPLE FETCH, REMOVE WHEN YOU CAN
+    fetch("http://localhost:5000/getCellsData")
+      .then(response => response.json())
+      .then(data => console.log(data))
+
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };

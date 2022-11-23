@@ -27,6 +27,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
   }, [habit]);
 
   const handleCheck = (e) => {
+    // DB-TODO: Write to Context which writes to DB
     let newCellsData = [...cellsData];
     setChecked(e.target.checked);
 
@@ -74,7 +75,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
-          viewBox="0 0 24 24"s
+          viewBox="0 0 24 24" s
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6"
