@@ -12,26 +12,6 @@ Date.prototype.addDays = function (days) {
 };
 
 const START_DATE = new Date();
-/*
-const dummyData = Array(200)
-  .fill(1)
-  .map((ie, i) => {
-    let date = START_DATE;
-    date = date.addDays(i);
-    return {
-      date: date,
-      index: i,
-      note: "placeholder",
-      wins: Array(10)
-        .fill(1)
-        .map((x) => Math.round(Math.random() * 20)),
-      losses: Array(10)
-        .fill(1)
-        .map((x) => Math.round(Math.random() * 20)),
-      value: Math.round(Math.random() * 1000),
-    };
-  });
-*/
 const dummyData = Array(100)
   .fill(1)
   .map((ie, i) => {

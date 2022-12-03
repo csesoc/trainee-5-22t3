@@ -10,20 +10,21 @@ app.use(express.json())
 app.use(cors())
 
 
-app.get('/getCellsData', async (req, res) => {
-    let dailyData = await db.getDailyCollection().find({ "value": 200 }).toArray()
+app.get('/dailydata', async (req, res) => {
+    let dailyData = await db.getDailyCollection().find().toArray()
+    res.status(200)
     res.send(dailyData)
 })
 
 // localhost/writeCellsData/{value}
-app.get('/writeCellsData/:value', async (req, res) => {
-    let value = req.params.value
-    await db.getDailyCollection().insertOne({
-        "value": value
-    })
+// app.get('/writeCellsData/:value', async (req, res) => {
+//     let value = req.params.value
+//     await db.getDailyCollection().insertOne({
+//         "value": value
+//     })
 
-    res.send("DONE EZ")
-})
+//     res.send("DONE EZ")
+// })
 
 db.connectToServer();
 
