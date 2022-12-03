@@ -16,6 +16,24 @@ app.get('/dailydata', async (req, res) => {
     res.send(dailyData)
 })
 
+app.get('/habits', async (req, res) => {
+    let habitData = await db.getHabitCollection().find().toArray()
+    res.status(200)
+    res.send(habitData)
+})
+
+app.post('/habits/add', async (req, res) => {
+    const { name, type } = req.body;
+    const habit = {
+        name: name,
+        type: type,
+        dates: [],
+        active: true,
+    }
+    let habitData = await db.getHabitCollection().insertOne(habit)
+    res.status(200)
+    res.send(habit)
+})
 // localhost/writeCellsData/{value}
 // app.get('/writeCellsData/:value', async (req, res) => {
 //     let value = req.params.value

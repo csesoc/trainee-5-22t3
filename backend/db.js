@@ -5,12 +5,14 @@ const client = new MongoClient(url)
 
 let dbConnection;
 let dailyCollection;
+let habitCollection;
 
 const connectToServer = async () => {
     await client.connect()
 
     dbConnection = client.db("tracker");
     dailyCollection = dbConnection.collection("dailydata");
+    habitCollection = dbConnection.collection("habits");
 }
 
 module.exports = {
@@ -19,6 +21,9 @@ module.exports = {
         return dbConnection;
     },
     getDailyCollection: () => {
-        return dailyCollection
+        return dailyCollection;
+    },
+    getHabitCollection: () => {
+        return habitCollection;
     }
 };

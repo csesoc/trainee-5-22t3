@@ -6,10 +6,8 @@ export const Context = createContext({
   setCellsData: () => { },
   selectedDate: null,
   setSelectedDate: () => { },
-  winHabits: [],
-  setWinHabits: () => { },
-  lossHabits: [],
-  setLossHabits: () => { },
+  habits: [],
+  setHabits: () => { },
   highlightHabit: [],
   addHighlightHabit: (habit) => { },
   removeHighlightHabit: (habit) => { },
@@ -18,8 +16,7 @@ export const Context = createContext({
 const ContextProvider = ({ children }) => {
   const [cellsData, setCellsData] = useState(heatmapCellStates.loading);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [winHabits, setWinHabits] = useState([]);
-  const [lossHabits, setLossHabits] = useState([]);
+  const [habits, setHabits] = useState([]);
   const [highlightHabit, setHighlightHabit] = useState([]);
 
 
@@ -50,10 +47,8 @@ const ContextProvider = ({ children }) => {
     setCellsData,
     selectedDate,
     setSelectedDate,
-    winHabits,
-    setWinHabits,
-    lossHabits,
-    setLossHabits,
+    habits,
+    setHabits,
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
