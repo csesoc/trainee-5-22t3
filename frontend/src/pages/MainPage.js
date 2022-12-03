@@ -11,28 +11,7 @@ Date.prototype.addDays = function (days) {
   return date;
 };
 
-const START_DATE = new Date();
-const dummyData = Array(100)
-  .fill(1)
-  .map((ie, i) => {
-    let date = START_DATE;
-    date = date.addDays(-i);
-    return {
-      date: date,
-      index: i,
-      note: "placeholder",
-      wins: [],
-      losses: [],
-      value: -1,
-    };
-  }).reverse();
-
 const MainPage = () => {
-  const fetchData = () => {
-    // DB-TODO, fetch and load data into context on initial render
-    return dummyData;
-  };
-
   const { cellsData, setCellsData, highlightHabit } = useContext(Context);
 
   const ref = useRef(null);
@@ -51,16 +30,17 @@ const MainPage = () => {
 
   useEffect(() => {
     window.addEventListener("resize", setHeatmapDimensions);
-    setTimeout(() => {
-      const res = fetchData();
-      setCellsData(res);
-    }, 1000); // wait so 2 seconds here
 
-    // EXAMPLE FETCH, REMOVE WHEN YOU CAN
-    fetch("http://localhost:5000/getCellsData")
-      .then(response => response.json())
-      .then(data => console.log(data))
+    const fetchData = async () => {
+      await fetch("http://localhost:5000/dailydata")
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          setCellsData(data)
+        })
+    }
 
+    fetchData();
     return () => {
       window.removeEventListener("resize", setHeatmapDimensions);
     };

@@ -1,7 +1,9 @@
 import React from "react";
+import moment from "moment";
 import { heatmapCellStates } from "./consts";
 import { useRef, useContext } from "react";
 import { Context } from "../Context";
+
 
 const restrict = (x, min, max) => {
   if (x >= min && x <= max) return x;
@@ -18,7 +20,8 @@ const getTooltip = (info) => {
     <span
       className={`absolute z-50 hidden px-6 py-2 mt-[150px] md:w-[1000%] 2xl:w-[700%] lg:w-[850%] sm:w-[2500%] text-center text-slate-200 bg-gray-700 border border-gray-500  rounded tooltip-text group-hover:block`}
     >
-      {info.date.yyyymmdd()}
+      {moment(info.date).format('DD-MM-YYYY')}
+      {/* {info.date.yyyymmdd()} */}
       <br />
       Note: {info.note}
       <br />
@@ -30,15 +33,13 @@ const getTooltip = (info) => {
 const groupStyle =
   "group container flex relative w-[100%] justify-center items-center";
 const cellBaseStyle = (state, color) => {
-  return `rounded-xl pb-[100%] w-[100%] m-auto relative ${
-    state === heatmapCellStates.loading ? "bg-slate-900" : color
-  }`;
+  return `rounded-xl pb-[100%] w-[100%] m-auto relative ${state === heatmapCellStates.loading ? "bg-slate-900" : color
+    }`;
 };
 
 const baseGlowStyle = (state) => {
-  return `rounded-xl m-auto absolute -inset-${
-    state === heatmapCellStates.loading ? +"0" : "1"
-  }`;
+  return `rounded-xl m-auto absolute -inset-${state === heatmapCellStates.loading ? +"0" : "1"
+    }`;
 };
 
 const getStyle = (state, color) => {
@@ -102,7 +103,7 @@ const HeatmapCell = ({ value, state, info }) => {
       ) : null}
       <div onClick={handleClick} className={`${getStyle(state, color)}`} />
       {state !== heatmapCellStates.isDimmed &&
-      state !== heatmapCellStates.loading
+        state !== heatmapCellStates.loading
         ? getTooltip(info)
         : null}
     </div>
