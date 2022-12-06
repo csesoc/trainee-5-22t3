@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./db')
 var cors = require('cors')
-
+var ObjectId = require('mongodb').ObjectId;
 // Create our app
 const app = express();
 
@@ -29,6 +29,40 @@ app.post('/dailydata/add', async (req, res) => {
     let result = await db.getDailyCollection().insertOne(data)
     res.status(200)
     res.send(result.insertedId)
+})
+
+app.get('/habits', async (req, res) => {
+    let habitData = await db.getHabitCollection().find().toArray()
+    res.status(200)
+    res.send(habitData)
+})
+app.get('/habits/:id', async (req, res) => {
+    let habitData = await db.getHabitCollection().find({_id: ObjectId(req.params.id)}).toArray()
+    res.status(200)
+    res.send(habitData)
+})
+app.post('/habits/add', async (req, res) => {
+    const { name, type } = req.body;
+    const habit = {
+        name: name,
+        type: type,
+        dates: [],
+        active: true,
+    }
+    let habitData = await db.getHabitCollection().insertOne(habit)
+    res.status(200)
+    res.send(habit)
+})
+
+app.post('/habits/delete', async (req, res) => {
+    const { id } = req.body;
+    console.log(typeof(ObjectId(id)))
+    db.getHabitCollection().updateOne(
+        {_id: ObjectId(id)},
+        {$set: {"active": false}}
+    );
+    res.status(200)
+    res.send({})
 })
 
 app.get('/habits', async (req, res) => {
