@@ -15,9 +15,9 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   let index = cellsData.indexOf(
     cellsData.find(
-      (x) => new Date(selectedDate.toString()).getDate() === new Date(x.date).getDate() && 
-      new Date(selectedDate.toString()).getMonth() === new Date(x.date).getMonth() && 
-      new Date(selectedDate.toString()).getFullYear() === new Date(x.date).getFullYear()
+      (x) => new Date(selectedDate.toString()).getDate() === new Date(x.date).getDate() &&
+        new Date(selectedDate.toString()).getMonth() === new Date(x.date).getMonth() &&
+        new Date(selectedDate.toString()).getFullYear() === new Date(x.date).getFullYear()
     )
   );
 
@@ -27,26 +27,15 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   const handleCheck = (e) => {
     // DB-TODO: Write to Context which writes to DB
-    let newCellsData = [...cellsData];
     setChecked(e.target.checked);
-    console.log(index);
-    if (type === "wins") {
-      if (e.target.checked) {
-        newCellsData[index].wins.push(text);
-      } else {
-        newCellsData[index].wins = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
+
+    let newCellsData = [...cellsData];
+    if (e.target.checked) {
+      newCellsData[index][type].push(id);
     } else {
-      if (e.target.checked) {
-        newCellsData[index].losses.push(text);
-      } else {
-        newCellsData[index].losses = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
+      newCellsData[index][type] = newCellsData[index][type].filter(x => x !== id);
     }
+
     /*
     * add or remove habit from cell based on id
     * recalculate value

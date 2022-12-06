@@ -18,7 +18,6 @@ app.get('/dailydata', async (req, res) => {
 
 app.post('/dailydata/add', async (req, res) => {
     const { date, note, wins, losses, value } = req.body;
-    console.log("h", date)
     const data = {
         date: new Date(date),
         note: note,
