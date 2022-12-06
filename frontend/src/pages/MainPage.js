@@ -32,12 +32,44 @@ const MainPage = () => {
     window.addEventListener("resize", setHeatmapDimensions);
 
     const fetchData = async () => {
-      await fetch("http://localhost:5000/dailydata")
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          setCellsData(data)
-        })
+        const response = await fetch("http://localhost:5000/dailydata")
+        const data = await response.json()
+        data.forEach(element => {
+          element.date = new Date(element.date)
+        });
+        console.log(data)
+        let today = new Date();
+        today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        console.log("today", today)
+        let latest = new Date(Math.max(...data.map(x => x.date)));
+        console.log(latest)
+        if (latest === -Infinity) {
+          latest = new Date(today);
+        } else {
+          latest =  new Date(latest.getFullYear(), latest.getMonth(), latest.getDate() + 1);
+          console.log("hi", latest)
+        }
+        while(latest <= today) {
+          const id = await fetch('http://localhost:5000/dailydata/add', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ date: new Date(latest), note: "", wins: [], losses: [], value: -1 }),
+          })
+          const newData = {
+            _id: id,
+            date: new Date(latest),
+            note: "",
+            wins: [],
+            losses: [],
+            value: -1,
+          }
+          data.push(newData);
+          console.log("hello", latest)
+          latest.setDate(latest.getDate() + 1)
+        }
+        setCellsData(data)
     }
 
     fetchData();
