@@ -15,7 +15,9 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   let index = cellsData.indexOf(
     cellsData.find(
-      (x) => x.date.slice(0, 10) === selectedDate.toString().slice(0, 10)
+      (x) => new Date(selectedDate.toString()).getDate() === new Date(x.date).getDate() && 
+      new Date(selectedDate.toString()).getMonth() === new Date(x.date).getMonth() && 
+      new Date(selectedDate.toString()).getFullYear() === new Date(x.date).getFullYear()
     )
   );
 
@@ -27,6 +29,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
     // DB-TODO: Write to Context which writes to DB
     let newCellsData = [...cellsData];
     setChecked(e.target.checked);
+    console.log(index);
     if (type === "wins") {
       if (e.target.checked) {
         newCellsData[index].wins.push(text);
