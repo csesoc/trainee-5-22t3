@@ -33,12 +33,12 @@ const HabitList = ({ type }) => {
   };
 
   const deleteHabit = (input) => {
-    fetch(`http://localhost:5000/habits/delete/${input._id}`, {
+    fetch(`http://localhost:5000/habits/delete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({}),
+      body: JSON.stringify({id: input._id}),
     })
       .then((response) => response.json())
       .then((data) => {
