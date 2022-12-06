@@ -16,6 +16,21 @@ app.get('/dailydata', async (req, res) => {
     res.send(dailyData)
 })
 
+app.post('/dailydata/add', async (req, res) => {
+    const { date, note, wins, losses, value } = req.body;
+    console.log("h", date)
+    const data = {
+        date: new Date(date),
+        note: note,
+        wins: wins,
+        losses: losses,
+        value: value,
+    }
+    let result = await db.getDailyCollection().insertOne(data)
+    res.status(200)
+    res.send(result.insertedId)
+})
+
 app.get('/habits', async (req, res) => {
     let habitData = await db.getHabitCollection().find().toArray()
     res.status(200)
