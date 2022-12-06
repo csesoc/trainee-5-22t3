@@ -50,8 +50,8 @@ const HabitList = ({ type }) => {
 
   return (
     <div>
-      {habits.filter((x) => x.type === type ).map((x) => 
-        <Habit habit={x.name} deleteHabit={deleteHabit} type={type} />
+      {habits.filter((x) => x.type === type).map((x) => 
+        <Habit key={x._id} name={x.name} deleteHabit={deleteHabit} type={x.type} id={x._id}/>
       )}
       <form onSubmit={addHabit}>
         <input

@@ -32,10 +32,15 @@ const getTooltip = (info) => {
 
 const groupStyle =
   "group container flex relative w-[100%] justify-center items-center";
+
 const cellBaseStyle = (state, color) => {
   return `rounded-xl pb-[100%] w-[100%] m-auto relative ${state === heatmapCellStates.loading ? "bg-slate-900" : color
     }`;
 };
+
+const cellDimmedStyle = (state, color) => {
+  return cellBaseStyle(state, color) + 'opacity-0';
+}
 
 const baseGlowStyle = (state) => {
   return `rounded-xl m-auto absolute -inset-${state === heatmapCellStates.loading ? +"0" : "1"
@@ -44,7 +49,7 @@ const baseGlowStyle = (state) => {
 
 const getStyle = (state, color) => {
   if (state === heatmapCellStates.isDimmed) {
-    return "rounded-xl pb-[80%] w-[80%] m-auto relative bg-slate-700";
+    return "rounded-xl pb-[80%] w-[80%] m-auto absolute bg-slate-700";
   }
 
   if (state === heatmapCellStates.isHighlighted) {
@@ -98,9 +103,14 @@ const HeatmapCell = ({ value, state, info }) => {
 
   return (
     <div className={`${groupStyle}`}>
-      {state !== heatmapCellStates.isDimmed ? (
-        <div ref={ref} className={`${cellBaseStyle(state, color)}`} />
-      ) : null}
+      <div
+        ref={ref}
+        className={`${
+          state !== heatmapCellStates.isDimmed
+            ? cellBaseStyle(state, color)
+            : cellDimmedStyle(state, color)
+        }`}
+      />
       <div onClick={handleClick} className={`${getStyle(state, color)}`} />
       {state !== heatmapCellStates.isDimmed &&
         state !== heatmapCellStates.loading
