@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./db')
 var cors = require('cors')
+var ObjectId = require('mongodb').ObjectID;
 
 // Create our app
 const app = express();
@@ -21,7 +22,11 @@ app.get('/habits', async (req, res) => {
     res.status(200)
     res.send(habitData)
 })
-
+app.get('/habits/:id', async (req, res) => {
+    let habitData = await db.getHabitCollection().find({"_id": ObjectId(req.params.id)}).toArray()
+    res.status(200)
+    res.send(habitData)
+})
 app.post('/habits/add', async (req, res) => {
     const { name, type } = req.body;
     const habit = {
@@ -33,6 +38,17 @@ app.post('/habits/add', async (req, res) => {
     let habitData = await db.getHabitCollection().insertOne(habit)
     res.status(200)
     res.send(habit)
+})
+
+app.post('/habits/delete/:id', async (req, res) => {
+    const id = req.params.id;
+
+    db.getHabitCollection().updateOne(
+        {"_id": ObjectId(id)},
+        {$set: {"active": false}}
+    );
+    res.status(200)
+    res.send({})
 })
 // localhost/writeCellsData/{value}
 // app.get('/writeCellsData/:value', async (req, res) => {
