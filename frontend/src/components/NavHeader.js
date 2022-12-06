@@ -10,7 +10,7 @@ function NavHeader() {
       ./tracker
       <p>
         {selectedDate !== null
-          ? selectedDate.toDateString()
+          ? new Date(selectedDate.toString()).toDateString()
           : new Date().toDateString()}
       </p>
     </div>
