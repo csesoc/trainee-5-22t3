@@ -3,22 +3,33 @@ import { useEffect, useState, useContext } from "react";
 import { Context } from "../Context";
 
 const HabitList = ({ type }) => {
-  const [habits, setHabits] = useState([]);
+  const {habits, setHabits} = useContext(Context);
   const [input, setInput] = useState("");
-  const { winHabits, lossHabits } = useContext(Context);
 
-  useEffect(() => {
-    setHabits(type === "wins" ? winHabits : lossHabits);
-  }, [winHabits, lossHabits, type]);
-
+  const habitExists = (name) => {
+    habits.forEach((habit) => {
+      if (habit.name === name) return true;
+    })
+    return false;
+  }
   const addHabit = (e) => {
-    // DB-TODO
     e.preventDefault();
-    if (input === "" || habits.includes(input)) return;
-    let newHabits = [...habits];
-    newHabits.push(input);
-    setHabits(newHabits);
-    setInput("");
+    if (input === "" || habitExists(input)) return;
+    fetch('http://localhost:5000/habits/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: input, type: type }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let newHabits = [...habits];
+        newHabits.push(data);
+        setHabits(newHabits);
+        setInput("");
+        console.log('Success:', data);
+      })
   };
 
   const deleteHabit = (habit) => {
@@ -29,9 +40,9 @@ const HabitList = ({ type }) => {
 
   return (
     <div>
-      {habits.map((x) => (
+      {habits.filter((x) => x.type === type ).map((x) => 
         <Habit habit={x} deleteHabit={deleteHabit} type={type} />
-      ))}
+      )}
       <form onSubmit={addHabit}>
         <input
           type="text"

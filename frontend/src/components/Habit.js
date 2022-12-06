@@ -13,51 +13,51 @@ const Habit = ({ habit, deleteHabit, type }) => {
     removeHighlightHabit
   } = useContext(Context);
 
-  let index = cellsData.indexOf(
-    cellsData.find(
-      (x) =>
-        x.date.getDate() === selectedDate.getDate() &&
-        x.date.getMonth() === selectedDate.getMonth() &&
-        x.date.getYear() === selectedDate.getYear()
-    )
-  );
+  // let index = cellsData.indexOf(
+  //   cellsData.find(
+  //     (x) =>
+  //       x.date.getDate() === selectedDate.getDate() &&
+  //       x.date.getMonth() === selectedDate.getMonth() &&
+  //       x.date.getYear() === selectedDate.getYear()
+  //   )
+  // );
 
   useEffect(() => {
     setText(habit);
   }, [habit]);
 
   const handleCheck = (e) => {
-    // DB-TODO: Write to Context which writes to DB
-    let newCellsData = [...cellsData];
-    setChecked(e.target.checked);
+    // // DB-TODO: Write to Context which writes to DB
+    // let newCellsData = [...cellsData];
+    // setChecked(e.target.checked);
 
-    if (type === "wins") {
-      if (e.target.checked) {
-        newCellsData[index].wins.push(text);
-      } else {
-        newCellsData[index].wins = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
-    } else {
-      if (e.target.checked) {
-        newCellsData[index].losses.push(text);
-      } else {
-        newCellsData[index].losses = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
-    }
-    newCellsData[index].value =
-      (0.5 +
-        newCellsData[index].wins.length * 0.1 -
-        0.1 * newCellsData[index].losses.length) *
-      1000;
-    setCellsData(newCellsData);
+    // if (type === "wins") {
+    //   if (e.target.checked) {
+    //     newCellsData[index].wins.push(text);
+    //   } else {
+    //     newCellsData[index].wins = newCellsData[index].wins.filter(
+    //       (x) => x !== text
+    //     );
+    //   }
+    // } else {
+    //   if (e.target.checked) {
+    //     newCellsData[index].losses.push(text);
+    //   } else {
+    //     newCellsData[index].losses = newCellsData[index].wins.filter(
+    //       (x) => x !== text
+    //     );
+    //   }
+    // }
+    // newCellsData[index].value =
+    //   (0.5 +
+    //     newCellsData[index].wins.length * 0.1 -
+    //     0.1 * newCellsData[index].losses.length) *
+    //   1000;
+    // setCellsData(newCellsData);
   };
 
   useEffect(() => {
-    setChecked(cellsData[index][type].includes(text));
+   // setChecked(cellsData[index][type].includes(text));
   }, [selectedDate]);
 
   return (
@@ -95,7 +95,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
-            class="w-6 h-6"
+            className="w-6 h-6"
           >
             <path
               stroke-linecap="round"
@@ -112,7 +112,7 @@ const Habit = ({ habit, deleteHabit, type }) => {
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="hotpink"
-            class="w-6 h-6"
+            className="w-6 h-6"
           >
             <path
               stroke-linecap="round"
