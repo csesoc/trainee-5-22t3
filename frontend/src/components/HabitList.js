@@ -32,16 +32,26 @@ const HabitList = ({ type }) => {
       })
   };
 
-  const deleteHabit = (habit) => {
-    // DB-TODO
-    let newHabits = habits.filter((h) => h !== habit);
-    setHabits(newHabits);
+  const deleteHabit = (input) => {
+    fetch(`http://localhost:5000/habits/delete/${input._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        let newHabits = habits.filter((h) => h !== input);
+        setHabits(newHabits);
+        console.log('Success:', data);
+    })
   };
 
   return (
     <div>
       {habits.filter((x) => x.type === type ).map((x) => 
-        <Habit habit={x} deleteHabit={deleteHabit} type={type} />
+        <Habit habit={x.name} deleteHabit={deleteHabit} type={type} />
       )}
       <form onSubmit={addHabit}>
         <input
