@@ -10,79 +10,76 @@ const Habit = ({ name, deleteHabit, type, id }) => {
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
-    checkHabitWins,
-    checkHabitLosses,
-    uncheckHabitLosses,
-    uncheckHabitWins,
+    checkHabits,
+    uncheckHabits,
     updateCellsDataValue,
   } = useContext(Context);
 
-  let cellId = cellsData === null ? -2 : cellsData.find(
-    (x) =>
-      new Date(selectedDate.toString()).getDate() ===
-        new Date(x.date).getDate() &&
-      new Date(selectedDate.toString()).getMonth() ===
-        new Date(x.date).getMonth() &&
-      new Date(selectedDate.toString()).getFullYear() ===
-        new Date(x.date).getFullYear()
-  )._id;
+  let cellId =
+    cellsData === null
+      ? -2
+      : cellsData.find(
+          (x) =>
+            new Date(selectedDate.toString()).getDate() ===
+              new Date(x.date).getDate() &&
+            new Date(selectedDate.toString()).getMonth() ===
+              new Date(x.date).getMonth() &&
+            new Date(selectedDate.toString()).getFullYear() ===
+              new Date(x.date).getFullYear()
+        )._id;
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (cellId === -2) return;
-
-      const res = await fetch(`http://localhost:5000/dailydata/${cellId}`);
-      let checked = await res.json();
-      console.log(checked);
-      checked = checked[type].includes(id);
-      setChecked(checked);
-    };
-
-    fetchData();
     setText(name);
+    if (cellId === -2) setChecked(false);
+    else
+      setChecked(cellsData.find((x) => x._id === cellId)[type].includes(name));
   }, [selectedDate]);
 
   const handleCheck = async () => {
     setChecked(!checked);
-    type === "wins"
-      ? checkHabitWins(cellId, [text])
-      : checkHabitLosses(cellId, [text]);
+    checkHabits(cellId, [id], type);
 
     const value = updateCellsDataValue(cellId);
+
+    const obj = {
+      id: cellId,
+      wins: [],
+      losses: [],
+      value: value,
+    };
+
+    obj[type].push(id);
 
     await fetch("http://localhost:5000/dailydata/habit/check", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        id: cellId,
-        wins: [id],
-        losses: [id],
-        value: value,
-      }),
+      body: JSON.stringify(obj),
     });
   };
 
   const handleUncheck = async () => {
     setChecked(!checked);
-    type === "wins"
-      ? uncheckHabitWins(cellId, [text])
-      : uncheckHabitLosses(cellId, [text]);
+    uncheckHabits(cellId, [id], type);
 
     const value = updateCellsDataValue(cellId);
+
+    const obj = {
+      id: cellId,
+      wins: [],
+      losses: [],
+      value: value,
+    };
+
+    obj[type].push(id);
 
     await fetch("http://localhost:5000/dailydata/habit/uncheck", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        id: cellId,
-        wins: [id],
-        losses: [id],
-        value: value,
-      }),
+      body: JSON.stringify(obj),
     });
   };
 

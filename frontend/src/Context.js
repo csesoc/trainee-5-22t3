@@ -11,10 +11,8 @@ export const Context = createContext({
   highlightHabit: [],
   addHighlightHabit: (habit) => {},
   removeHighlightHabit: (habit) => {},
-  checkHabitWins: (id, wins) => {},
-  checkHabitLosses: (id, losses) => {},
-  uncheckHabitWins: (id, wins) => {},
-  uncheckHabitLosses: (id, losses) => {},
+  checkHabits: (id, habits, type) => {},
+  uncheckHabits: (id, habits, type) => {},
   updateCellsDataValue: (id) => {},
 });
 
@@ -45,36 +43,19 @@ const ContextProvider = ({ children }) => {
     });
   };
 
-  const checkHabitWins = (id, wins) => {
+  const checkHabits = (id, habits, type) => {
     setCellsData((c) => {
       let newCells = [...c];
-      newCells.find((x) => x._id === id).wins.push(...wins);
+      newCells.find((x) => x._id === id)[type].push(...habits);
       return newCells;
     });
   };
 
-  const checkHabitLosses = (id, losses) => {
+  const uncheckHabits = (id, habits, type) => {
     setCellsData((c) => {
       let newCells = [...c];
-      newCells.find((x) => x._id === id).losses.push(...losses);
-      return newCells;
-    });
-  };
-
-  const uncheckHabitWins = (id, wins) => {
-    setCellsData((c) => {
-      let newCells = [...c];
-      newCells.find((x) => x._id === id).wins.filter((x) => !wins.includes(x));
-      return newCells;
-    });
-  };
-
-  const uncheckHabitLosses = (id, losses) => {
-    setCellsData((c) => {
-      let newCells = [...c];
-      newCells
-        .find((x) => x._id === id)
-        .losses.filter((x) => !losses.includes(x));
+      let cell = newCells.find((x) => x._id === id);
+      cell[type] = cell[type].filter((x) => !habits.includes(x));
       return newCells;
     });
   };
@@ -98,10 +79,8 @@ const ContextProvider = ({ children }) => {
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
-    checkHabitWins,
-    checkHabitLosses,
-    uncheckHabitLosses,
-    uncheckHabitWins,
+    checkHabits,
+    uncheckHabits,
     updateCellsDataValue,
   };
 
