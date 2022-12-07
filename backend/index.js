@@ -61,9 +61,10 @@ app.post("/dailydata/habit/uncheck", async (req, res) => {
 app.get("/dailydata/:id", async (req, res) => {
   let dailyData = await db
     .getDailyCollection()
-    .find({ _id: req.params.id });
+    .find({ _id: ObjectId(req.params.id) })
+		.toArray();
   res.status(200);
-  res.send(dailyData);
+  res.send(dailyData[0]);
 });
 
 app.get("/habits", async (req, res) => {

@@ -29,10 +29,12 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(cellsData);
+      if (cellId === -2) return;
+
       const res = await fetch(`http://localhost:5000/dailydata/${cellId}`);
-      const checked = await res.json();
+      let checked = await res.json();
       console.log(checked);
+      checked = checked[type].includes(id);
       setChecked(checked);
     };
 
@@ -55,8 +57,8 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       },
       body: JSON.stringify({
         id: cellId,
-        wins: [text],
-        losses: [text],
+        wins: [id],
+        losses: [id],
         value: value,
       }),
     });
@@ -77,8 +79,8 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       },
       body: JSON.stringify({
         id: cellId,
-        wins: [text],
-        losses: [text],
+        wins: [id],
+        losses: [id],
         value: value,
       }),
     });
