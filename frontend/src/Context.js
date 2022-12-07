@@ -4,6 +4,8 @@ import { heatmapCellStates } from "./components/consts";
 export const Context = createContext({
   cellsData: [],
   setCellsData: () => {},
+  page: null,
+  setPage: () => {},
   selectedDate: null,
   setSelectedDate: () => {},
   habits: [],
@@ -21,6 +23,7 @@ const ContextProvider = ({ children }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [habits, setHabits] = useState([]);
   const [highlightHabit, setHighlightHabit] = useState([]);
+  const [page, setPage] = useState("Heatmap");
 
   // const adjustHabitValue = (newValue) => {
   //   fetch('localhost:5000/updateCellValue')
@@ -72,6 +75,8 @@ const ContextProvider = ({ children }) => {
   const initialContext = {
     cellsData,
     setCellsData,
+    page,
+    setPage,
     selectedDate,
     setSelectedDate,
     habits,

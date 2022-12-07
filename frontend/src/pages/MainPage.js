@@ -4,6 +4,7 @@ import HeatmapContainer from "../components/HeatmapContainer";
 import { useRef } from "react";
 import { useContext, useEffect, useState, useLayoutEffect } from "react";
 import { Context } from "../Context";
+import Stats from "../components/Stats";
 
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
@@ -12,7 +13,7 @@ Date.prototype.addDays = function (days) {
 };
 
 const MainPage = () => {
-  const { cellsData, setCellsData, highlightHabit } = useContext(Context);
+  const { cellsData, setCellsData, highlightHabit, page } = useContext(Context);
 
   const ref = useRef(null);
 
@@ -32,45 +33,55 @@ const MainPage = () => {
     window.addEventListener("resize", setHeatmapDimensions);
 
     const fetchData = async () => {
-        const response = await fetch("http://localhost:5000/dailydata")
-        const data = await response.json()
-        data.forEach(element => {
-          element.date = new Date(element.date)
-        });
-        console.log(data)
-        let today = new Date();
-        today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-        console.log("today", today)
-        let latest = new Date(Math.max(...data.map(x => x.date)));
-        console.log(latest)
-        if (latest === -Infinity) {
-          latest = new Date(today);
-        } else {
-          latest =  new Date(latest.getFullYear(), latest.getMonth(), latest.getDate() + 1);
-          console.log("hi", latest)
-        }
-        while(latest <= today) {
-          const id = await fetch('http://localhost:5000/dailydata/add', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ date: new Date(latest), note: "", wins: [], losses: [], value: -1 }),
-          })
-          const newData = {
-            _id: id,
+      const response = await fetch("http://localhost:5000/dailydata");
+      const data = await response.json();
+      data.forEach((element) => {
+        element.date = new Date(element.date);
+      });
+      console.log(data);
+      let today = new Date();
+      today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      console.log("today", today);
+      let latest = new Date(Math.max(...data.map((x) => x.date)));
+      console.log(latest);
+      if (latest === -Infinity) {
+        latest = new Date(today);
+      } else {
+        latest = new Date(
+          latest.getFullYear(),
+          latest.getMonth(),
+          latest.getDate() + 1
+        );
+        console.log("hi", latest);
+      }
+      while (latest <= today) {
+        const id = await fetch("http://localhost:5000/dailydata/add", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             date: new Date(latest),
             note: "",
             wins: [],
             losses: [],
             value: -1,
-          }
-          data.push(newData);
-          console.log("hello", latest)
-          latest.setDate(latest.getDate() + 1)
-        }
-        setCellsData(data)
-    }
+          }),
+        });
+        const newData = {
+          _id: id,
+          date: new Date(latest),
+          note: "",
+          wins: [],
+          losses: [],
+          value: -1,
+        };
+        data.push(newData);
+        console.log("hello", latest);
+        latest.setDate(latest.getDate() + 1);
+      }
+      setCellsData(data);
+    };
 
     fetchData();
     return () => {
@@ -83,13 +94,19 @@ const MainPage = () => {
       <NavHeader />
       <div className="flex flex-row flex-1">
         <div ref={ref} className="h-full w-[80%]">
-          <HeatmapContainer
-            data={cellsData}
-            highlightProperties={highlightHabit}
-            isPropertiesHighlighted={highlightHabit.length === 0 ? false : true}
-            height={height}
-            width={width}
-          />
+          {page === "Heatmap" ? (
+            <HeatmapContainer
+              data={cellsData}
+              highlightProperties={highlightHabit}
+              isPropertiesHighlighted={
+                highlightHabit.length === 0 ? false : true
+              }
+              height={height}
+              width={width}
+            />
+          ) : (
+            <Stats />
+          )}
         </div>
         <div className="w-[20%]">
           <SideMenu />
