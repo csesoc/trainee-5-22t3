@@ -87,7 +87,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
   const getSvg = (includesText) => {
     if (!includesText)
       return (
-        <button className="pr-[20px]" onClick={() => addHighlightHabit(text)}>
+        <button className="pr-[20px]" onClick={() => addHighlightHabit(id)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -108,7 +108,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       return (
         <button
           className="pr-[20px]"
-          onClick={() => removeHighlightHabit(text)}
+          onClick={() => removeHighlightHabit(id)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -160,7 +160,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
           />
         </svg>
       </button>
-      {getSvg(highlightHabit.includes(text))}
+      {getSvg(highlightHabit.includes(id))}
     </label>
   );
 };
