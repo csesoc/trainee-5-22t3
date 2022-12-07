@@ -31,13 +31,14 @@ const Habit = ({ name, deleteHabit, type, id }) => {
   useEffect(() => {
     setText(name);
     if (cellId === -2) setChecked(false);
-    else
-      setChecked(cellsData.find((x) => x._id === cellId)[type].includes(name));
+    else { 
+      setChecked(cellsData.find((x) => x._id === cellId)[type].includes(id)); 
+    }
   }, [selectedDate]);
 
   const handleCheck = async () => {
     setChecked(!checked);
-    checkHabits(cellId, [id], type);
+    checkHabits(cellId, id, type);
 
     const value = updateCellsDataValue(cellId);
 
@@ -61,7 +62,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   const handleUncheck = async () => {
     setChecked(!checked);
-    uncheckHabits(cellId, [id], type);
+    uncheckHabits(cellId, id, type);
 
     const value = updateCellsDataValue(cellId);
 

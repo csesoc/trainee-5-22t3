@@ -11,8 +11,8 @@ export const Context = createContext({
   highlightHabit: [],
   addHighlightHabit: (habit) => {},
   removeHighlightHabit: (habit) => {},
-  checkHabits: (id, habits, type) => {},
-  uncheckHabits: (id, habits, type) => {},
+  checkHabits: (id, habit, type) => {},
+  uncheckHabits: (id, habit, type) => {},
   updateCellsDataValue: (id) => {},
 });
 
@@ -43,19 +43,19 @@ const ContextProvider = ({ children }) => {
     });
   };
 
-  const checkHabits = (id, habits, type) => {
+  const checkHabits = (id, habit, type) => {
     setCellsData((c) => {
       let newCells = [...c];
-      newCells.find((x) => x._id === id)[type].push(...habits);
+      newCells.find((x) => x._id === id)[type].push(habit);
       return newCells;
     });
   };
 
-  const uncheckHabits = (id, habits, type) => {
+  const uncheckHabits = (id, habit, type) => {
     setCellsData((c) => {
       let newCells = [...c];
       let cell = newCells.find((x) => x._id === id);
-      cell[type] = cell[type].filter((x) => !habits.includes(x));
+      cell[type] = cell[type].filter((x) => x !== habit);
       return newCells;
     });
   };
