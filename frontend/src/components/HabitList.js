@@ -3,22 +3,33 @@ import { useEffect, useState, useContext } from "react";
 import { Context } from "../Context";
 
 const HabitList = ({ type }) => {
-  const {habits, setHabits} = useContext(Context);
+  const { habits, setHabits } = useContext(Context);
   const [input, setInput] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("http://localhost:5000/habits");
+      const habits = await res.json();
+      setHabits(habits)
+    };
+
+    fetchData();
+  }, []);
 
   const habitExists = (name) => {
     habits.forEach((habit) => {
       if (habit.name === name) return true;
-    })
+    });
     return false;
-  }
+  };
+
   const addHabit = (e) => {
     e.preventDefault();
     if (input === "" || habitExists(input)) return;
-    fetch('http://localhost:5000/habits/add', {
-      method: 'POST',
+    fetch("http://localhost:5000/habits/add", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ name: input, type: type }),
     })
@@ -28,31 +39,39 @@ const HabitList = ({ type }) => {
         newHabits.push(data);
         setHabits(newHabits);
         setInput("");
-        console.log('Success:', data);
-      })
+        console.log("Success:", data);
+      });
   };
 
   const deleteHabit = (input) => {
     fetch(`http://localhost:5000/habits/delete`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({id: input._id}),
+      body: JSON.stringify({ id: input._id }),
     })
       .then((response) => response.json())
       .then((data) => {
         let newHabits = habits.filter((h) => h !== input);
         setHabits(newHabits);
-        console.log('Success:', data);
-    })
+        console.log("Success:", data);
+      });
   };
 
   return (
     <div>
-      {habits.filter((x) => x.type === type).map((x) => 
-        <Habit key={x._id} name={x.name} deleteHabit={deleteHabit} type={x.type} id={x._id}/>
-      )}
+      {habits
+        .filter((x) => x.type === type)
+        .map((x) => (
+          <Habit
+            key={x._id}
+            name={x.name}
+            deleteHabit={deleteHabit}
+            type={x.type}
+            id={x._id}
+          />
+        ))}
       <form onSubmit={addHabit}>
         <input
           type="text"

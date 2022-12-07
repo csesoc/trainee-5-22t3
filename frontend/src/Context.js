@@ -3,14 +3,19 @@ import { heatmapCellStates } from "./components/consts";
 
 export const Context = createContext({
   cellsData: [],
-  setCellsData: () => { },
+  setCellsData: () => {},
   selectedDate: null,
-  setSelectedDate: () => { },
+  setSelectedDate: () => {},
   habits: [],
-  setHabits: () => { },
+  setHabits: () => {},
   highlightHabit: [],
-  addHighlightHabit: (habit) => { },
-  removeHighlightHabit: (habit) => { },
+  addHighlightHabit: (habit) => {},
+  removeHighlightHabit: (habit) => {},
+  checkHabitWins: (id, wins) => {},
+  checkHabitLosses: (id, losses) => {},
+  uncheckHabitWins: (id, wins) => {},
+  uncheckHabitLosses: (id, losses) => {},
+  updateCellsDataValue: (id) => {},
 });
 
 const ContextProvider = ({ children }) => {
@@ -18,8 +23,6 @@ const ContextProvider = ({ children }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [habits, setHabits] = useState([]);
   const [highlightHabit, setHighlightHabit] = useState([]);
-
-
 
   // const adjustHabitValue = (newValue) => {
   //   fetch('localhost:5000/updateCellValue')
@@ -42,6 +45,49 @@ const ContextProvider = ({ children }) => {
     });
   };
 
+  const checkHabitWins = (id, wins) => {
+    setCellsData((c) => {
+      let newCells = [...c];
+      newCells.find((x) => x._id === id).wins.push(...wins);
+      return newCells;
+    });
+  };
+
+  const checkHabitLosses = (id, losses) => {
+    setCellsData((c) => {
+      let newCells = [...c];
+      newCells.find((x) => x._id === id).losses.push(...losses);
+      return newCells;
+    });
+  };
+
+  const uncheckHabitWins = (id, wins) => {
+    setCellsData((c) => {
+      let newCells = [...c];
+      newCells.find((x) => x._id === id).wins.filter((x) => !wins.includes(x));
+      return newCells;
+    });
+  };
+
+  const uncheckHabitLosses = (id, losses) => {
+    setCellsData((c) => {
+      let newCells = [...c];
+      newCells
+        .find((x) => x._id === id)
+        .losses.filter((x) => !losses.includes(x));
+      return newCells;
+    });
+  };
+
+  const updateCellsDataValue = (id) => {
+    const cell = cellsData.find((x) => x._id === id);
+    const newCellsData = [...cellsData];
+    newCellsData.find((x) => x._id === id).value =
+      (0.5 + cell.wins.length * 0.1 - 0.1 * cell.losses.length) * 1000;
+    setCellsData(newCellsData);
+    return newCellsData.find((x) => x._id === id).value;
+  };
+
   const initialContext = {
     cellsData,
     setCellsData,
@@ -52,6 +98,11 @@ const ContextProvider = ({ children }) => {
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
+    checkHabitWins,
+    checkHabitLosses,
+    uncheckHabitLosses,
+    uncheckHabitWins,
+    updateCellsDataValue,
   };
 
   return <Context.Provider value={initialContext}>{children}</Context.Provider>;

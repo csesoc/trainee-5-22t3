@@ -7,61 +7,82 @@ const Habit = ({ name, deleteHabit, type, id }) => {
   const {
     selectedDate,
     cellsData,
-    setCellsData,
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
+    checkHabitWins,
+    checkHabitLosses,
+    uncheckHabitLosses,
+    uncheckHabitWins,
+    updateCellsDataValue,
   } = useContext(Context);
 
-  let index = cellsData.indexOf(
-    cellsData.find(
-      (x) => new Date(selectedDate.toString()).getDate() === new Date(x.date).getDate() && 
-      new Date(selectedDate.toString()).getMonth() === new Date(x.date).getMonth() && 
-      new Date(selectedDate.toString()).getFullYear() === new Date(x.date).getFullYear()
-    )
-  );
+  let cellId = cellsData === null ? -2 : cellsData.find(
+    (x) =>
+      new Date(selectedDate.toString()).getDate() ===
+        new Date(x.date).getDate() &&
+      new Date(selectedDate.toString()).getMonth() ===
+        new Date(x.date).getMonth() &&
+      new Date(selectedDate.toString()).getFullYear() ===
+        new Date(x.date).getFullYear()
+  )._id;
 
   useEffect(() => {
-    setText(name);
-  }, [name]);
+    const fetchData = async () => {
+      console.log(cellsData);
+      const res = await fetch(`http://localhost:5000/dailydata/${cellId}`);
+      const checked = await res.json();
+      console.log(checked);
+      setChecked(checked);
+    };
 
-  const handleCheck = (e) => {
-    // DB-TODO: Write to Context which writes to DB
-    let newCellsData = [...cellsData];
-    setChecked(e.target.checked);
-    console.log(index);
-    if (type === "wins") {
-      if (e.target.checked) {
-        newCellsData[index].wins.push(text);
-      } else {
-        newCellsData[index].wins = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
-    } else {
-      if (e.target.checked) {
-        newCellsData[index].losses.push(text);
-      } else {
-        newCellsData[index].losses = newCellsData[index].wins.filter(
-          (x) => x !== text
-        );
-      }
-    }
-    /*
-    * add or remove habit from cell based on id
-    * recalculate value
-    */
-    newCellsData[index].value =
-      (0.5 +
-        newCellsData[index].wins.length * 0.1 -
-        0.1 * newCellsData[index].losses.length) *
-      1000;
-    setCellsData(newCellsData);
+    fetchData();
+    setText(name);
+  }, [selectedDate]);
+
+  const handleCheck = async () => {
+    setChecked(!checked);
+    type === "wins"
+      ? checkHabitWins(cellId, [text])
+      : checkHabitLosses(cellId, [text]);
+
+    const value = updateCellsDataValue(cellId);
+
+    await fetch("http://localhost:5000/dailydata/habit/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: cellId,
+        wins: [text],
+        losses: [text],
+        value: value,
+      }),
+    });
   };
 
-  useEffect(() => {
-    // setChecked(cellsData[index][type].includes(text));
-  }, [selectedDate]);
+  const handleUncheck = async () => {
+    setChecked(!checked);
+    type === "wins"
+      ? uncheckHabitWins(cellId, [text])
+      : uncheckHabitLosses(cellId, [text]);
+
+    const value = updateCellsDataValue(cellId);
+
+    await fetch("http://localhost:5000/dailydata/habit/uncheck", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: cellId,
+        wins: [text],
+        losses: [text],
+        value: value,
+      }),
+    });
+  };
 
   const getSvg = (includesText) => {
     if (!includesText)
@@ -85,7 +106,10 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       );
     else
       return (
-        <button className="pr-[20px]" onClick={() => removeHighlightHabit(text)}>
+        <button
+          className="pr-[20px]"
+          onClick={() => removeHighlightHabit(text)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -115,7 +139,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
         <input
           type="checkbox"
           className="rounded text-pink-400 mr-3 mb-1"
-          onChange={handleCheck}
+          onChange={(e) => (e.target.checked ? handleCheck() : handleUncheck())}
           checked={checked}
         />
         {text}
