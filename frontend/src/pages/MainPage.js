@@ -41,10 +41,12 @@ const MainPage = () => {
       console.log(data)
       let today = new Date();
       today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-      let latest = new Date(Math.max(...data.map(x => x.date)));
+      let latest = Math.max(...data.map(x => x.date));
       if (latest === -Infinity) {
+        console.log("Nothing...");
         latest = new Date(today);
       } else {
+        latest = new Date(latest);
         latest = new Date(latest.getFullYear(), latest.getMonth(), latest.getDate() + 1);
       }
       while (latest <= today) {

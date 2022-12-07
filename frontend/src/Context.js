@@ -3,17 +3,17 @@ import { heatmapCellStates } from "./components/consts";
 
 export const Context = createContext({
   cellsData: [],
-  setCellsData: () => {},
+  setCellsData: () => { },
   selectedDate: null,
-  setSelectedDate: () => {},
+  setSelectedDate: () => { },
   habits: [],
-  setHabits: () => {},
+  setHabits: () => { },
   highlightHabit: [],
-  addHighlightHabit: (habit) => {},
-  removeHighlightHabit: (habit) => {},
-  checkHabits: (id, habit, type) => {},
-  uncheckHabits: (id, habit, type) => {},
-  updateCellsDataValue: (id) => {},
+  addHighlightHabit: (habitId) => { },
+  removeHighlightHabit: (habitId) => { },
+  checkHabits: (id, habitId, type) => { },
+  uncheckHabits: (id, habitId, type) => { },
+  updateCellsDataValue: (id) => { },
 });
 
 const ContextProvider = ({ children }) => {
@@ -27,35 +27,50 @@ const ContextProvider = ({ children }) => {
   //   // update locally on success
   // }
 
-  const addHighlightHabit = (habit) => {
+  const addHighlightHabit = (habitId) => {
     setHighlightHabit((h) => {
       let newList = [...h];
-      newList.push(habit);
+      newList.push(habitId);
       return newList;
     });
   };
 
-  const removeHighlightHabit = (habit) => {
+  const removeHighlightHabit = (habitId) => {
     setHighlightHabit((h) => {
       let newList = [...h];
-      newList = newList.filter((x) => x !== habit);
+      newList = newList.filter((x) => x !== habitId);
       return newList;
     });
   };
 
-  const checkHabits = (id, habit, type) => {
+  const checkHabits = (id, habitId, type) => {
+    setHabits((h) => {
+      let newHabits = [...h];
+      let habit = newHabits.find((x) => x._id === habitId);
+      habit.dates.push(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate()))
+      return newHabits;
+    });
+
     setCellsData((c) => {
       let newCells = [...c];
-      newCells.find((x) => x._id === id)[type].push(habit);
+      newCells.find((x) => x._id === id)[type].push(habitId);
       return newCells;
     });
   };
 
-  const uncheckHabits = (id, habit, type) => {
+  const uncheckHabits = (id, habitId, type) => {
+    setHabits((h) => {
+      let newHabits = [...h];
+      let habit = newHabits.find((x) => x._id === habitId);
+      const date = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
+      habit.dates = habit.dates.filter(x => x.date !== date);
+      return newHabits;
+    });
+
     setCellsData((c) => {
       let newCells = [...c];
       let cell = newCells.find((x) => x._id === id);
-      cell[type] = cell[type].filter((x) => x !== habit);
+      cell[type] = cell[type].filter((x) => x !== habitId);
       return newCells;
     });
   };

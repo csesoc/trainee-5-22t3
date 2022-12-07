@@ -29,12 +29,16 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       )._id;
 
   useEffect(() => {
-    setText(name);
-    if (cellId === -2) setChecked(false);
-    else {
+    if (cellId === -2) {
+      setChecked(false);
+    } else {
       setChecked(cellsData.find((x) => x._id === cellId)[type].includes(id));
     }
   }, [selectedDate]);
+
+  useEffect(() => {
+    setText(name);
+  }, [])
 
   const handleCheck = async () => {
     setChecked(!checked);
@@ -44,12 +48,14 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
     const obj = {
       id: cellId,
+      cellDate: new Date(selectedDate),
       wins: [],
       losses: [],
       value: value,
     };
 
     obj[type].push(id);
+    console.log(obj)
 
     await fetch("http://localhost:5000/dailydata/habit/check", {
       method: "POST",
@@ -68,12 +74,14 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
     const obj = {
       id: cellId,
+      cellDate: new Date(selectedDate),
       wins: [],
       losses: [],
       value: value,
     };
 
     obj[type].push(id);
+    console.log(obj)
 
     await fetch("http://localhost:5000/dailydata/habit/uncheck", {
       method: "POST",
