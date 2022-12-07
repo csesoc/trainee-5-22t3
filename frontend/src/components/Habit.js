@@ -7,55 +7,87 @@ const Habit = ({ name, deleteHabit, type, id }) => {
   const {
     selectedDate,
     cellsData,
-    setCellsData,
     highlightHabit,
     addHighlightHabit,
     removeHighlightHabit,
+    checkHabits,
+    uncheckHabits,
+    updateCellsDataValue,
   } = useContext(Context);
 
-  let index = cellsData.indexOf(
-    cellsData.find(
-      (x) => new Date(selectedDate.toString()).getDate() === new Date(x.date).getDate() &&
-        new Date(selectedDate.toString()).getMonth() === new Date(x.date).getMonth() &&
-        new Date(selectedDate.toString()).getFullYear() === new Date(x.date).getFullYear()
-    )
-  );
+  let cellId =
+    cellsData === null
+      ? -2
+      : cellsData.find(
+        (x) =>
+          new Date(selectedDate.toString()).getDate() ===
+          new Date(x.date).getDate() &&
+          new Date(selectedDate.toString()).getMonth() ===
+          new Date(x.date).getMonth() &&
+          new Date(selectedDate.toString()).getFullYear() ===
+          new Date(x.date).getFullYear()
+      )._id;
 
   useEffect(() => {
     setText(name);
-  }, [name]);
-
-  const handleCheck = (e) => {
-    // DB-TODO: Write to Context which writes to DB
-    setChecked(e.target.checked);
-
-    let newCellsData = [...cellsData];
-    if (e.target.checked) {
-      newCellsData[index][type].push(id);
-    } else {
-      newCellsData[index][type] = newCellsData[index][type].filter(x => x !== id);
+    if (cellId === -2) setChecked(false);
+    else {
+      setChecked(cellsData.find((x) => x._id === cellId)[type].includes(id));
     }
+  }, [selectedDate]);
 
-    /*
-    * add or remove habit from cell based on id
-    * recalculate value
-    */
-    newCellsData[index].value =
-      (0.5 +
-        newCellsData[index].wins.length * 0.1 -
-        0.1 * newCellsData[index].losses.length) *
-      1000;
-    setCellsData(newCellsData);
+  const handleCheck = async () => {
+    setChecked(!checked);
+    checkHabits(cellId, id, type);
+
+    const value = updateCellsDataValue(cellId);
+
+    const obj = {
+      id: cellId,
+      wins: [],
+      losses: [],
+      value: value,
+    };
+
+    obj[type].push(id);
+
+    await fetch("http://localhost:5000/dailydata/habit/check", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
   };
 
-  useEffect(() => {
-    // setChecked(cellsData[index][type].includes(text));
-  }, [selectedDate]);
+  const handleUncheck = async () => {
+    setChecked(!checked);
+    uncheckHabits(cellId, id, type);
+
+    const value = updateCellsDataValue(cellId);
+
+    const obj = {
+      id: cellId,
+      wins: [],
+      losses: [],
+      value: value,
+    };
+
+    obj[type].push(id);
+
+    await fetch("http://localhost:5000/dailydata/habit/uncheck", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    });
+  };
 
   const getSvg = (includesText) => {
     if (!includesText)
       return (
-        <button className="pr-[20px]" onClick={() => addHighlightHabit(text)}>
+        <button className="pr-[20px]" onClick={() => addHighlightHabit(id)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -74,7 +106,10 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       );
     else
       return (
-        <button className="pr-[20px]" onClick={() => removeHighlightHabit(text)}>
+        <button
+          className="pr-[20px]"
+          onClick={() => removeHighlightHabit(id)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -104,7 +139,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
         <input
           type="checkbox"
           className="rounded text-pink-400 mr-3 mb-1"
-          onChange={handleCheck}
+          onChange={(e) => (e.target.checked ? handleCheck() : handleUncheck())}
           checked={checked}
         />
         {text}
@@ -125,7 +160,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
           />
         </svg>
       </button>
-      {getSvg(highlightHabit.includes(text))}
+      {getSvg(highlightHabit.includes(id))}
     </label>
   );
 };
