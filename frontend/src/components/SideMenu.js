@@ -9,11 +9,11 @@ const SideMenu = () => {
           Do
           <HabitList type={"wins"} />
         </div>
-        <div className="font-bold">
+        <div className="mb-[30px] font-bold">
           Don't Do
           <HabitList type={"losses"} />
         </div>
-        <div>
+        <div className="mb-[30px] font-bold">
           Note
           <Note/>
         </div>

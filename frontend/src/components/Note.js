@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { Context } from "../Context";
 
 const Note = () => {
@@ -11,25 +11,32 @@ const Note = () => {
 
     const updateNote = async (e) => {
         e.preventDefault();
+        let cellId =
+        cellsData === null
+          ? -2
+          : cellsData.find(
+            (x) =>
+              new Date(selectedDate.toString()).getDate() ===
+              new Date(x.date).getDate() &&
+              new Date(selectedDate.toString()).getMonth() ===
+              new Date(x.date).getMonth() &&
+              new Date(selectedDate.toString()).getFullYear() ===
+              new Date(x.date).getFullYear()
+          )._id;
+
+        if (cellId === -2) return;
+
         console.log(input)
-        const date = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
         await fetch("http://localhost:5000/dailydata/note/edit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ cellDate: date, note: input }),
+          body: JSON.stringify({ cellId: cellId, note: input }),
         })
 
-        console.log("here")
-
         let newCellsData = [...cellsData];
-        console.log(newCellsData.find(x => new Date(x.date.getFullYear(), x.date.getMonth(), x.date.getDate()) === date));
-        for(let x of newCellsData) {
-            console.log(new Date(x.date.getFullYear(), x.date.getMonth(), x.date.getDate()) == date);
-        }
-        console.log(date)
-        newCellsData.find(x => new Date(x.date.getFullYear(), x.date.getMonth(), x.date.getDate()) === date).note = input;
+        newCellsData.find(x => x._id === cellId).note = input;
         setCellsData(newCellsData);
         setInput("");
         console.log("Success:", cellsData);

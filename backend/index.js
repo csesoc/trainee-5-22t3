@@ -94,10 +94,10 @@ app.post("/dailydata/habit/uncheck", async (req, res) => {
 });
 
 app.post("/dailydata/note/edit", async (req, res) => {
-    const { cellDate, note } = req.body;
-    console.log(cellDate)
+    const { cellId, note } = req.body;
+    console.log(cellId)
     await db.getDailyCollection().updateOne(
-        { date: cellDate },
+        { _id: ObjectId(cellId) },
         {
             $set: { note: note },
         }
