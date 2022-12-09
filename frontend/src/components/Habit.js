@@ -80,6 +80,8 @@ const Habit = ({ name, deleteHabit, type, id }) => {
       value: value,
     };
 
+    console.log("uncheck")
+
     obj[type].push(id);
     console.log(obj)
 

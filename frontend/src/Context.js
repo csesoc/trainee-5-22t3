@@ -70,6 +70,7 @@ const ContextProvider = ({ children }) => {
     setCellsData((c) => {
       let newCells = [...c];
       let cell = newCells.find((x) => x._id === id);
+      console.log(type)
       cell[type] = cell[type].filter((x) => x !== habitId);
       return newCells;
     });
@@ -77,9 +78,10 @@ const ContextProvider = ({ children }) => {
 
   const updateCellsDataValue = (id) => {
     const cell = cellsData.find((x) => x._id === id);
+    console.log(cell.losses, cell.losses.length);
     const newCellsData = [...cellsData];
     newCellsData.find((x) => x._id === id).value =
-      (0.5 + cell.wins.length * 0.1 - 0.1 * cell.losses.length) * 1000;
+      (0.5 + (cell.wins.length * 0.1) - (cell.losses.length * 0.1)) * 1000;
     setCellsData(newCellsData);
     return newCellsData.find((x) => x._id === id).value;
   };
