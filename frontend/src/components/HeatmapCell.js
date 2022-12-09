@@ -24,8 +24,6 @@ const getTooltip = (info) => {
       {/* {info.date.yyyymmdd()} */}
       <br />
       Note: {info.note}
-      <br />
-      Value: {info.value}
     </span>
   );
 };

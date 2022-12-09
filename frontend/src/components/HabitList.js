@@ -43,17 +43,17 @@ const HabitList = ({ type }) => {
       });
   };
 
-  const deleteHabit = (input) => {
+  const deleteHabit = (id) => {
     fetch(`http://localhost:5000/habits/delete`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ id: input._id }),
+      body: JSON.stringify({ id: id }),
     })
       .then((response) => response.json())
       .then((data) => {
-        let newHabits = habits.filter((h) => h !== input);
+        let newHabits = habits.filter((h) => h._id !== id);
         setHabits(newHabits);
         console.log("Success:", data);
       });
