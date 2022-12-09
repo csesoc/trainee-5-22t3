@@ -1,4 +1,5 @@
 import HabitList from "./HabitList";
+import Note from "./Note";
 
 const SideMenu = () => {
   return (
@@ -11,6 +12,10 @@ const SideMenu = () => {
         <div className="font-bold">
           Don't Do
           <HabitList type={"losses"} />
+        </div>
+        <div>
+          Note
+          <Note/>
         </div>
       </div>
     </>

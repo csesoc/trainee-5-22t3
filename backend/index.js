@@ -93,6 +93,20 @@ app.post("/dailydata/habit/uncheck", async (req, res) => {
     res.send({});
 });
 
+app.post("/dailydata/note/edit", async (req, res) => {
+    const { cellDate, note } = req.body;
+    console.log(cellDate)
+    await db.getDailyCollection().updateOne(
+        { date: cellDate },
+        {
+            $set: { note: note },
+        }
+    );
+
+    res.status(200);
+    res.send({});
+});
+
 app.get("/dailydata/:id", async (req, res) => {
     let dailyData = await db
         .getDailyCollection()
