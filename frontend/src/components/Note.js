@@ -45,16 +45,16 @@ const Note = () => {
     return (
         <div >
             <form onSubmit={updateNote}>
-            <input
-            type="text"
-            id="add"
-            className="rounded w-[175px] m-2 bg-[#242831] border border-[#363b47] text-[#B7B1C7]"
+            <textarea
+            className="rounded w-[95%] m-2 bg-[#242831] border border-[#363b47] text-[#B7B1C7] block items-center"
             placeholder="add note"
+            rows="8"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
-            />
-            <button className="bg-pink-400 text-[#201D26] px-[8px] pb-[3px] rounded-2xl active:bg-pink-500 active:shadow-lg transition duration-150 ease-in-out">
-            +
+            onChange={(e) => setInput(e.target.value)}>
+              add note...
+            </textarea>
+            <button className="bg-pink-400 text-base text-[#201D26] px-[8px] pb-[3px] rounded-2xl active:bg-pink-500 active:shadow-lg transition duration-150 ease-in-out">
+            save
             </button>
             </form>
         </div>

@@ -42,7 +42,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   const handleCheck = async () => {
     setChecked(!checked);
-    checkHabits(cellId, id, type);
+    await checkHabits(cellId, id, type);
 
     const value = updateCellsDataValue(cellId);
 
@@ -68,7 +68,7 @@ const Habit = ({ name, deleteHabit, type, id }) => {
 
   const handleUncheck = async () => {
     setChecked(!checked);
-    uncheckHabits(cellId, id, type);
+    await uncheckHabits(cellId, id, type);
 
     const value = updateCellsDataValue(cellId);
 
