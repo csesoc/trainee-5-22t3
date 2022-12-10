@@ -93,6 +93,20 @@ app.post("/dailydata/habit/uncheck", async (req, res) => {
     res.send({});
 });
 
+app.post("/dailydata/note/edit", async (req, res) => {
+    const { cellId, note } = req.body;
+    console.log(cellId)
+    await db.getDailyCollection().updateOne(
+        { _id: ObjectId(cellId) },
+        {
+            $set: { note: note },
+        }
+    );
+
+    res.status(200);
+    res.send({});
+});
+
 app.get("/dailydata/:id", async (req, res) => {
     let dailyData = await db
         .getDailyCollection()
