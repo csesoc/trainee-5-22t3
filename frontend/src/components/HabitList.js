@@ -62,7 +62,7 @@ const HabitList = ({ type }) => {
   return (
     <div>
       {habits
-        .filter((x) => x.type === type)
+        .filter((x) => x.type === type && x.active === true)
         .map((x) => (
           <Habit
             key={x._id}
