@@ -62,7 +62,7 @@ const HabitList = ({ type }) => {
   return (
     <div>
       {habits
-        .filter((x) => x.type === type)
+        .filter((x) => x.type === type && x.active === true)
         .map((x) => (
           <Habit
             key={x._id}
@@ -76,7 +76,7 @@ const HabitList = ({ type }) => {
         <input
           type="text"
           id="add"
-          className="rounded w-[175px] m-2 bg-[#242831] border border-[#363b47] text-[#B7B1C7]"
+          className="rounded w-[75%] m-2 bg-[#242831] border border-[#363b47] text-[#B7B1C7]"
           placeholder="add habit"
           value={input}
           onChange={(e) => setInput(e.target.value)}
